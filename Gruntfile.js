@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 								res.setHeader('Access-Control-Allow-Methods', '*');
 								next();
 							}),
-							serveStatic('./')
+							serveStatic('..')
 						];					
 						return middlewares;
 					}

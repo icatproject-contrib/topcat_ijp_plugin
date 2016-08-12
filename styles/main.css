@@ -1,0 +1,56 @@
+.filter-row {
+  padding-right: 5px;
+  padding-bottom: 5px;
+
+}
+
+.filter-select {
+  height: 25px;
+  padding: 0px;
+}
+
+.job-details-panel {
+  margin-bottom: 0px;
+  margin-top: 15px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.job-details-tab-content {
+  height: calc(100% - 57px) !important;
+}
+
+.configure-job-btn {
+  margin-top: 17px;
+  margin-bottom: 17px;
+}
+
+.configure-job-dropdown {
+  margin-top: -17px;
+}
+
+.radio-well {
+  padding: 3px;
+  margin: 3px;
+}
+
+.job-options-checkbox {
+  position: relative;
+  left: 5px;
+  top: 2px;
+}
+
+.configure-job-box {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 15px;
+}
+
+.cart-configure-job-btn {
+  margin-right: 5px;
+}
+
+.cart-configure-job-dropup {
+  min-width: 0px;
+  width: calc(100% - 5px);
+}

@@ -1,0 +1,38 @@
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h3 translate="MY_JOBS.JOB_DETAILS.MODAL.TITLE" translate-values="{ jobId: myJobsController.selectedJob.jobId }"></h3>
+    </div>
+
+    <div class="modal-body">
+        <div take-up-remaining-height>
+            <ul class="nav nav-tabs nav-tabs-head" role="tablist">
+                <li class="active"><a data-target="#job-output" role="tab" data-toggle="tab" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.STANDARD_OUTPUT"></a></li>
+                <li><a ng-show="myJobsController.errorOutput.length > 0" data-target="#error-output" role="tab"  data-toggle="tab" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.ERROR_OUTPUT"></a></li>
+            </ul>
+
+            <div id="jobDetailsTab" class="tab-content job-details-tab-content" take-up-remaining-height>
+
+                <div role="tabpanel" class="tab-pane active" id="job-output" ng-style="{ 'height': '100%' }">
+                    <div class="panel panel-default job-details-panel">
+                        <div ng-show="!myJobsController.isLoadingStandardOutput && myJobsController.standardOutput.length > 0" class="panel-body" ng-bind-html="myJobsController.standardOutput"></div>
+                        <div ng-show="!myJobsController.isLoadingStandardOutput && myJobsController.standardOutput.length === 0" class="panel-body" translate="MY_JOBS.JOB_DETAILS.MODAL.NO_OUTPUT"></div>
+                        <div ng-show="myJobsController.isLoadingStandardOutput" class="panel-body" translate="MY_JOBS.JOB_DETAILS.MODAL.IS_LOADING"></div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="error-output" ng-style="{ 'height': '100%' }">
+                    <div class="panel panel-default job-details-panel">
+                        <div class="panel-body" ng-bind-html="myJobsController.errorOutput"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning pull-right" ng-click="myJobsController.close(myJobsController.jobDetailsModal)" translate="MY_JOBS.JOB_DETAILS.MODAL.BUTTON.CLOSE.TEXT"></button>
+    </div>
+
+</div>

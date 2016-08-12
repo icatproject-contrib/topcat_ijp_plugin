@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h3 class="modal-title" translate="SUBMITTING_JOB.MODAL.TITLE"></h3>
+</div>
+<div class="modal-body">
+
+    <div ng-if="configureJobController.isSubmitting">
+        <div>
+            <p><span us-spinner="{radius:2, width:2, length: 2}" class="grid-cell-spinner"></span>{{ 'SUBMITTING_JOB.MODAL.SUBMITTING_JOB_MESSAGE' | translate }}</p>
+        </div>
+    </div>
+
+    <div ng-if="!configureJobController.isSubmitting">
+
+        <div>
+            <p ng-if="configureJobController.jobIds.length === 1" ><span translate="SUBMITTING_JOB.MODAL.BATCH_SUBMISSION_SUCCESSFUL_MESSAGE" translate-values="{ jobId: configureJobController.jobIds[0] }"></span></p>
+            <p ng-if="configureJobController.jobIds.length > 1" ><span translate="SUBMITTING_JOB.MODAL.BATCH_SUBMISSIONS_SUCCESSFUL_MESSAGE" translate-values="{ jobIds: configureJobController.jobIds.join(', ') }"></span></p>
+        </div>
+
+        <div ng-if="configureJobController.interactiveSessionDetails !== undefined">
+            <div ng-if="configureJobController.platformIsWindows">
+                <p><span translate="SUBMITTING_JOB.MODAL.WIN_INTERACTIVE_SUBMISSION_SUCCESSFUL_MESSAGE"></span></p>
+                <p><b>Username: </b>{{configureJobController.interactiveSessionDetails.username}}, <b>Password: </b>{{configureJobController.interactiveSessionDetails.password}}, <b>Host: </b>{{configureJobController.interactiveSessionDetails.host}}</p>
+            </div>
+            <div ng-if="!configureJobController.platformIsWindows">
+                <p><span translate="SUBMITTING_JOB.MODAL.UNIX_INTERACTIVE_SUBMISSION_SUCCESSFUL_MESSAGE"></span></p>
+                <p>rdesktop -u {{configureJobController.interactiveSessionDetails.username}} -p {{configureJobController.interactiveSessionDetails.password}} {{configureJobController.interactiveSessionDetails.host}}</p>
+            </div>
+        </div>
+
+        <div ng-if="configureJobController.failedSubmissions.length > 0">
+            <p translate="SUBMITTING_JOB.MODAL.SUBMISSION_FAILED_MESSAGE"></p>
+        	<table class="table-bordered table-condensed" width="100%">
+                <tr>
+                    <th ng-if="configureJobController.numInputEntities > 0" translate="SUBMITTING_JOB.MODAL.COLUMN.INPUT_ENTITY_IDS"></th>
+                    <th translate="SUBMITTING_JOB.MODAL.COLUMN.ERROR_MESSAGE"></th>
+                </tr>
+                <tr ng-repeat="failedSubmission in configureJobController.failedSubmissions">
+                    <td ng-if="configureJobController.numInputEntities > 0">
+                        <span>{{failedSubmission.inputEntityIds}}</span>
+                    </td>
+                    <td>
+                        <span>{{failedSubmission.error}}</sparn>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning" ng-click="configureJobController.close(configureJobController.submittingModal)" translate="SUBMITTING_JOB.MODAL.BUTTON.CLOSE.TEXT"></button>
+</div>
