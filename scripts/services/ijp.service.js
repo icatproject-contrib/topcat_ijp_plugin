@@ -5,11 +5,7 @@
 
     var app = angular.module('topcat');
 
-    app.service('ijpService', function($q, $http, helpers, tc, tcCache, tcIjpRemoteDesktop){
-
-      this.ijpFacilities = function(){
-        return _.select(tc.userFacilities(), function(facility){ return facility.config().ijpUrl !== undefined; });
-      }
+    app.service('tcIjp', function($q, $http, helpers, tcCache, tcIjpRemoteDesktop){
 
     	this.create = function(facility){
     		return new Ijp(facility);
@@ -149,7 +145,7 @@
               parameter: jobParameters,
               sessionId: facility.icat().session().sessionId
             }, true);
-            this.post('submit', params).then(function(response){
+            this.post('submit', params, {}).then(function(response){
               out.resolve(response);
             }, function(){ out.reject(); });
             return out.promise

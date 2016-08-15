@@ -4,7 +4,7 @@
 
     var app = angular.module('topcat');
 
-    app.controller('MyJobsController', function($rootScope, $q, $scope, $state, $uibModal, $interval, tc, ijpService, helpers, uiGridConstants){
+    app.controller('MyJobsController', function($rootScope, $q, $scope, $state, $uibModal, $interval, tc, helpers, uiGridConstants){
 
         var that = this;
         var pagingConfig = tc.config().paging;
@@ -14,8 +14,9 @@
         var gridApi;
         var facilityName = $state.params.facilityName;
         this.userFacilities = tc.userFacilities();
-        this.ijpFacilities = ijpService.ijpFacilities();
+        this.ijpFacilities = tc.ijpFacilities();
         this.selectedIjpFacility = this.ijpFacilities[0];
+        var pluginUrl = 'https://localhost:8000/topcat_plugin_ijp/';
 
         if(!$state.params.facilityName){
             if (this.ijpFacilities.length > 0) {
@@ -25,9 +26,6 @@
             }
             return;
         }
-
-        console.log(facilityName);
-        var ijp = ijpService.create(tc.facility(facilityName));
 
         var gridOptions = _.merge({
             data: [],
@@ -71,7 +69,7 @@
 
             refreshJobOutput();
             that.jobDetailsModal = $uibModal.open({
-                templateUrl : 'https://localhost:8000/views/job-details-modal.html',
+                templateUrl : pluginUrl + 'views/job-details-modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -100,7 +98,7 @@
                 that.cartItems = cart.cartItems
                 if(that.cartItems.length > 0) {
                     that.chooseJobInputsModal = $uibModal.open({
-                        templateUrl : 'views/choose-job-inputs-modal.html',
+                        templateUrl : pluginUrl + 'views/choose-job-inputs-modal.html',
                         size : 'med',
                         scope: $scope
                     });
@@ -113,7 +111,7 @@
         this.openConfigureJobModal = function(jobInputs) {
             if(this.chooseJobInputsModal) { this.chooseJobInputsModal.close() }
             $uibModal.open({
-                templateUrl : 'views/configure-job.html',
+                templateUrl : pluginUrl + 'views/configure-job.html',
                 controller: "ConfigureJobController as configureJobController",
                 size : 'lg',
                 resolve: {
@@ -129,14 +127,14 @@
 
         this.deleteJob = function(clickEvent, job){
             clickEvent.stopPropagation();
-            ijp.deleteJob(String(job.jobId)).finally(function(){
+            tc.ijp(facilityName).deleteJob(String(job.jobId)).finally(function(){
                 refresh();
             });
         }
 
         this.cancelJob = function(clickEvent, job){
             clickEvent.stopPropagation();
-            ijp.cancelJob(String(job.jobId)).finally(function(){
+            tc.ijp(facilityName).cancelJob(String(job.jobId)).finally(function(){
                 refresh();
             });
         }
@@ -209,14 +207,14 @@
 
         function getJobs() {
             that.isLoading = true;
-            return ijp.getJob().then(function(results){
+            return tc.ijp(facilityName).getJob().then(function(results){
                 that.isLoading = false;
                 return results;
             });
         }
 
         function getStandardOutput() {
-            ijp.getJobOutput(String(that.selectedJob.jobId)).then(function(standardOutput){
+            tc.ijp(facilityName).getJobOutput(String(that.selectedJob.jobId)).then(function(standardOutput){
                 that.standardOutput = standardOutput.output.replace(/\n/g,"<br />");
             }).finally(function(){
                 that.isLoadingStandardOutput = false;
@@ -224,7 +222,7 @@
         };
 
         function getErrorOutput() {
-            ijp.getErrorOutput(String(that.selectedJob.jobId)).then(function(errorOutput){
+            tc.ijp(facilityName).getErrorOutput(String(that.selectedJob.jobId)).then(function(errorOutput){
                 that.errorOutput = errorOutput.output.replace(/\n/g,"<br />");
             });
         };

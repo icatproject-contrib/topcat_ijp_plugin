@@ -19,6 +19,7 @@
         this.loadingJobTypes = true;
         this.form = {};
         getCompatibleJobTypes();
+        var pluginUrl = 'https://localhost:8000/topcat_plugin_ijp/';
 
         this.checkFormValidity = function() {
             that.form.$setSubmitted();
@@ -36,7 +37,7 @@
             if (this.confirmModal) this.confirmModal.close();
             that.isSubmitting = true;
             that.submittingModal = $uibModal.open({
-                        templateUrl : 'views/submitting-job-modal.html',
+                        templateUrl : pluginUrl + 'views/submitting-job-modal.html',
                         scope: $scope,
                         size : 'med',
                         backdrop: 'static'
