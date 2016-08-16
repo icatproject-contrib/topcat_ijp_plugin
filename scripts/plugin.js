@@ -158,7 +158,10 @@ registerTopcatPlugin(function(pluginUrl){
                 {
                     insertAfter: 'my-data',
                     multiFacility: true,
-                    controller: 'MyJobsController as myJobsController'
+                    controller: 'MyJobsController as myJobsController',
+                    params: {
+                        pluginUrl: pluginUrl
+                    }
                 });
 
             //If there is only one facility logged in, only show a generic 'Configure Job' button in the cart
@@ -177,7 +180,8 @@ registerTopcatPlugin(function(pluginUrl){
                                 return cart.cartItems;
                             });
                         },
-                        facilityName: function() { return tc.ijpFacilities()[0].config().name; }
+                        facilityName: function() { return tc.ijpFacilities()[0].config().name; },
+                        pluginUrl: function() { return pluginUrl; }
                     }
                 });
             });
@@ -200,7 +204,8 @@ registerTopcatPlugin(function(pluginUrl){
                                     return cart.cartItems;
                                 });
                             },
-                            facilityName: function() { return ijpFacility.config().name; }
+                            facilityName: function() { return ijpFacility.config().name; },
+                            pluginUrl: function() { return pluginUrl; }
                         }
                     });
                 })
@@ -221,7 +226,8 @@ registerTopcatPlugin(function(pluginUrl){
                             entityType: entity.entityType.toLowerCase(),
                             entityId: entity.id
                         }]; },
-                        facilityName:  function() { return entity.facility.config().name; }
+                        facilityName:  function() { return entity.facility.config().name; },
+                        pluginUrl: function() { return pluginUrl; }
                     }
                 });
             });

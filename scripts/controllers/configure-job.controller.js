@@ -6,7 +6,7 @@
 
     var app = angular.module('topcat');
 
-    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalInstance, $filter, tc, inputEntities, facilityName){
+    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalInstance, $filter, tc, inputEntities, facilityName, pluginUrl){
 
         var that = this;
         var inputEntityTypes = _.uniq(_.map(inputEntities, 'entityType'));
@@ -19,8 +19,6 @@
         this.loadingJobTypes = true;
         this.form = {};
         getCompatibleJobTypes();
-
-        var pluginUrl = 'https://localhost:8000/topcat_plugin_ijp/';
 
         this.checkFormValidity = function() {
             that.form.$setSubmitted();

@@ -4,7 +4,7 @@
 
     var app = angular.module('topcat');
 
-    app.controller('MyJobsController', function($rootScope, $q, $scope, $state, $uibModal, $interval, tc, helpers, uiGridConstants){
+    app.controller('MyJobsController', function($rootScope, $q, $scope, $state, $stateParams, $uibModal, $interval, tc, helpers, uiGridConstants){
 
         var that = this;
         var pagingConfig = tc.config().paging;
@@ -16,7 +16,6 @@
         this.userFacilities = tc.userFacilities();
         this.ijpFacilities = tc.ijpFacilities();
         this.selectedIjpFacility = this.ijpFacilities[0];
-        var pluginUrl = 'https://localhost:8000/topcat_plugin_ijp/';
 
         if(!$state.params.facilityName){
             if (this.ijpFacilities.length > 0) {
@@ -69,7 +68,7 @@
 
             refreshJobOutput();
             that.jobDetailsModal = $uibModal.open({
-                templateUrl : pluginUrl + 'views/job-details-modal.html',
+                templateUrl : $stateParams.pluginUrl + 'views/job-details-modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -98,7 +97,7 @@
                 that.cartItems = cart.cartItems
                 if(that.cartItems.length > 0) {
                     that.chooseJobInputsModal = $uibModal.open({
-                        templateUrl : pluginUrl + 'views/choose-job-inputs-modal.html',
+                        templateUrl : $stateParams.pluginUrl + 'views/choose-job-inputs-modal.html',
                         size : 'med',
                         scope: $scope
                     });
@@ -111,12 +110,13 @@
         this.openConfigureJobModal = function(jobInputs) {
             if(this.chooseJobInputsModal) { this.chooseJobInputsModal.close() }
             $uibModal.open({
-                templateUrl : pluginUrl + 'views/configure-job.html',
+                templateUrl : $stateParams.pluginUrl + 'views/configure-job.html',
                 controller: "ConfigureJobController as configureJobController",
                 size : 'lg',
                 resolve: {
-                    inputEntities: function() { return jobInputs },
-                    facilityName: function() { return that.selectedIjpFacility.config().name }
+                    inputEntities: function() { return jobInputs; },
+                    facilityName: function() { return that.selectedIjpFacility.config().name; },
+                    pluginUrl: function() { return $stateParams.pluginUrl; }
                 }
             });
         }
