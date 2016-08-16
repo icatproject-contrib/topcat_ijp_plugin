@@ -5,7 +5,7 @@
 
     var app = angular.module('topcat');
 
-    app.service('tcIjpRemoteDesktop', function($q, helpers){
+    app.service('tcIjpRemoteDesktop', function($q, $state, helpers){
 
     	this.create = function(ijp){
     		return new IjpRemoteDesktop(ijp);
@@ -22,6 +22,18 @@
             password: sessionDetails.password,
             hostName: sessionDetails.host
           }).then(function(response){
+            var filename = $state.params.facilityName + '_remote_session.rdp';
+            var contentType = 'application/x-rdp';
+            var blob = new Blob([response], { type: contentType });
+
+            var urlCreator = window.URL || window.webkitURL || window.mozURL || window.msURL;
+            var url = urlCreator.createObjectURL(blob);
+
+            var downloadLink = angular.element('<a></a>');
+            downloadLink.attr('href',url);
+            downloadLink.attr('download', filename);
+            downloadLink[0].click();
+
             out.resolve(response);
           }, function(){ out.reject(); });
           return out.promise;

@@ -210,7 +210,7 @@ registerTopcatPlugin(function(pluginUrl){
             tc.ui().registerEntityActionButton('configure-job', {
                 entityTypes: ['dataset', 'datafile'],
                 class: 'btn btn-success',
-                show: function() { return tc.facility($state.params.facilityName).config().browse[$state.current.param.entityType].gridOptions.enableConfigureJob; }
+                show: function() { var out = tc.facility($state.params.facilityName).config().browse[$state.current.param.entityType].gridOptions.enableConfigureJob; return out === undefined ? false : out}
             }, function(entity){
                 $uibModal.open({
                     templateUrl: viewsUrl + 'configure-job.html',
