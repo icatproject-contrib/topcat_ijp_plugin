@@ -30,7 +30,9 @@
             var url = urlCreator.createObjectURL(blob);
 
             var downloadLink = angular.element('<a></a>');
-            downloadLink.attr('href',url);
+            downloadLink.css({ display: 'none' });
+            angular.element(document.body).append(downloadLink);
+            downloadLink.attr('href', url);
             downloadLink.attr('download', filename);
             downloadLink[0].click();
 
