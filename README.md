@@ -16,11 +16,19 @@ The following configuration options are added within the existing 'facilities' a
           {
               "ijpUrl": "https://example.com"
               "browse":{
-                  "dataset": {
+                  "entity": {
                        "enableConfigureJob": true
-                  }
-                  "datafile": {
-                       "enableConfigureJob": true
+                       "gridOptions": {
+                           "externalSelectFilters": {
+                               "enableJobTypeFilter": true
+                               "filters": [{
+                                   "field": "datasetType.name"
+                               },
+                               {
+                                   "field": "dataset.name"
+                               }]
+                           }
+                       }
                   }
               }
           }
@@ -31,12 +39,15 @@ the above attributes are defined as:
 
   * "facilities"
     * [facility]
-      * "ijpUrl" - A URL to a valid IJP REST API.
+      * "**ijpUrl**" - a URL to a valid IJP REST API.
       * "browse"
-        * "dataset"
-          * "enableConfigureJob" - specifies whether you are able to configure a job on a single specific dataset via a button in the "Browse" table. Can be true or false.
-        * "datafile"
-          * "enableConfigureJob" - specifies whether you are able to configure a job on a single specific datafile via a button in the "Browse" table. Can be true or false.
+        * "entity" - an entity (dataset, datafile, investigation etc.)
+          * "**enableConfigureJob**" - specifies whether you are able to configure a job on a single specific entity via a button in the 'Browse' table. Can be true or false. Is only applicable to datasets or datafiles.
+          * "gridOptions"
+            * "**externalSelectFilters**"
+              * "**enableJobTypeFilter**" - specifies whether there should be a select box containing all IJP job types above the 'Browse' grid. Can be true or false. Only applicable to datasets.
+              * "**filters**" - an array containing all the select boxes to be shown.
+                * "**field**" - the field that should be displayed in the select box. Can use Topcat defined jpql variables.
 
 ### lang.json
 
@@ -220,6 +231,15 @@ The rest of the translation strings can be appended to the lang.json file and ar
     "TOOLTIP": {
       "TEXT": "Click to configure a job on this entity"
     }
+  },
+  "SELECT_FILTERS": {
+    "FILTER_TEXT": "Filter by {{filterName}}...",
+      "DATASET": {
+        "DATASET_TYPE": "dataset type"
+      },
+      "JOB_TYPE": {
+        "NAME": "job type"
+      }
   }
 }
 
