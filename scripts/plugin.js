@@ -163,7 +163,7 @@ registerTopcatPlugin(function(pluginUrl){
                 });
         },
 
-        setup: function($state, $uibModal, $q, tc, icatSchema, helpers){
+        setup: function($rootScope, $state, $uibModal, $q, tc, icatSchema, helpers){
 
             //Add tab to show user's jobs
             tc.ui().registerMainTab('my-jobs', viewsUrl + 'my-jobs.html',
@@ -358,6 +358,7 @@ registerTopcatPlugin(function(pluginUrl){
                                 query.where(['?.? = ?', filter.variablePath.safe(), filter.fieldName.safe(), filter.selectedOption]);
                             } else {
                                 //If there is no variable path, it must be the job type filter, which searches by dataset type
+                                $rootScope.selectedJobType = filter.selectedOption;
                                 query.where(['dataset.type.name in (?)', ("'" + filter.datasetTypes[filter.selectedOption].join("','") + "'").safe()]);
                             }
                         }

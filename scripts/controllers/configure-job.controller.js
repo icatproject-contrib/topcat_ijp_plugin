@@ -33,6 +33,7 @@
             that.interactiveSessionDetails = undefined;
             that.platformIsWindows = navigator.platform.match(/Win/);
             that.failedSubmissions = [];
+
             if (this.confirmModal) this.confirmModal.close();
             that.isSubmitting = true;
             that.submittingModal = $uibModal.open({
@@ -67,6 +68,7 @@
                     if (inputEntity.entityType === 'datafile') jobParameters_.unshift('--datafileIds=' + inputEntity.entityId);
                     if (inputEntity.entityType === 'dataset') jobParameters_.unshift('--datasetIds=' + inputEntity.entityId);
                     promises.push(tc.ijp(facilityName).submitJob(that.selectedJobType.name, jobParameters_).then(function(response){
+                        //Multiple jobs can only be submitted at once if the job is a batch job, so the response must have an id
                         that.jobIds.push(response.jobId);
                     }, function(response){
                         that.failedSubmissions.push({
@@ -82,8 +84,10 @@
                 if (inputContainsDatasets) jobParameters.unshift('--datasetIds=' + _.map(_.filter(inputEntities, function(o) { return o.entityType === 'dataset'}), 'entityId').join(','));
                 promises.push(tc.ijp(facilityName).submitJob(that.selectedJobType.name, jobParameters).then(function(response){
                     if (response.jobId) {
+                        //If response has a job id, the submitted job was a batch job
                         that.jobIds.push(response.jobId);
                     } else if (response.rdp) {
+                        //If response has an rdp attribute, the submitted job was interactive
                         that.interactiveSessionDetails = response.rdp;
                         tc.ijp(facilityName).remoteDesktop().openSession(response.rdp);
                     }
@@ -105,6 +109,7 @@
         };
 
         this.openConfirmJobModal = function() {
+            //Opens a modal asking user whether they want to submit a single or multiple jobs
             that.form.$setSubmitted();
             if (that.form.$valid){
                 this.confirmModal = $uibModal.open({
@@ -171,7 +176,7 @@
                         if (inputContainsDatafiles) compatibleJobTypes = _.filter(compatibleJobTypes, function(jobType){ return jobType.acceptsDatafiles});
 
                         that.compatibleJobTypes = compatibleJobTypes;
-                        that.selectedJobType = $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
+                        that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                         that.loadingJobTypes = false;
                         setupJobOptions();
                     });
@@ -185,7 +190,7 @@
                     if (multipleInputEntities) compatibleJobTypes = _.filter(compatibleJobTypes, function(jobType){ return (jobType.type === "batch" || jobType.multiple) });
 
                     that.compatibleJobTypes = compatibleJobTypes;
-                    that.selectedJobType = $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
+                    that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                     that.loadingJobTypes = false;
                     setupJobOptions();
 
@@ -193,7 +198,7 @@
                     //If there is no input, show 'job-only' jobs, where neither datasets nor datafiles are accepted
                     var compatibleJobTypes = _.filter(allJobTypes, function(jobType) { return !(jobType.acceptsDatafiles || jobType.acceptsDatasets) });
                     that.compatibleJobTypes = compatibleJobTypes;
-                    that.selectedJobType = $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
+                    that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                     that.loadingJobTypes = false;
                     setupJobOptions();
                 }
@@ -203,9 +208,7 @@
         }
 
         function getInputDatasetTypes(){
-            var inputDatasets = _.filter(inputEntities, function(inputEntity){
-                if (inputEntity.entityType === 'dataset') return true;
-            });
+            var inputDatasets = _.filter(inputEntities, function(inputEntity){ return inputEntity.entityType === 'dataset'; });
             var inputDatasetIds = _.map(inputDatasets, 'entityId');
 
             var deferred = $q.defer();
