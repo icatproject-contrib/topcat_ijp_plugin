@@ -8,7 +8,7 @@ This plugin requires some additional configuration options in **topcat.json** an
 
 ### topcat.json
 
-The following configuration options are added within the existing "facilities" attribute in topcat.json
+The following configuration options are added within the existing 'facilities' attribute in topcat.json
 
 ```
   {    
@@ -66,7 +66,7 @@ Some of the additional translation strings required for this plugin are included
 }
 
 ```
-The rest of the translation strings can be appended to the lang.json file and are as follows:
+The rest of the translation strings can be appended to the lang.json file and are:
 
 ```
 {
@@ -224,3 +224,49 @@ The rest of the translation strings can be appended to the lang.json file and ar
 }
 
 ```
+
+## Guide
+
+### My Jobs Page
+
+When you log in to Topcat, you will see an additional 'My Jobs' tab next to the 'My Data' tab.
+
+![tabs-4.png](images/tabs-4.png "My Jobs tab heading")
+
+In the 'My Jobs' tab you can view all your submitted batch jobs in a table. You can quickly see the current status of your jobs in the Status column, which is updated every 30 seconds. Depending on the status of a job, you can perform different actions on that job, such as deleting or cancelling it, by clicking on a button in the Actions column. Note: these actions are permanent!
+
+![my-jobs-grid.png](images/my-jobs-grid.png "My Jobs grid")
+
+Click on a row of the table to open a popup with tabs showing the standard and error output (if there is any) for that job.
+
+![job-output.png](images/job-output.png "Job output popup")
+
+### Configuring and Submitting Jobs
+
+**For a selection of datasets/datafiles**
+
+To configure and run a job on a selection of datasets and/or datafiles, first put them in your cart. In the cart, click the ‘Configure Job’ button to configure a job on these items. A popup will appear with a dropdown box where you can select your desired job type. The list will only show job types that are compatible with all the items in your cart. If the job has any options, you can fill them in, then press the ‘Submit Job’ button. If you have multiple items in your cart, but the job doesn’t accept multiple items then multiple jobs will be submitted automatically. If the job does accept multiple items you will be asked whether you want to submit one job or multiple jobs.
+
+![configure-job.png](images/configure-job.png "Configure job page")
+
+If the submitted job(s) are batch jobs a message will appear informing you of the job IDs, you can now view these jobs in the ‘My Jobs’ page.
+
+![job-submission.png](images/job-submission.png "Job submitted popup")
+
+If the submitted job is an interactive job, you will get a message with instructions on how to access your interactive session.
+
+**For a single dataset/datafile**
+
+You can also run a job on a specific dataset or datafile by clicking on the green ‘Configure Job’ button on a row in the ‘Browse’ table, if this has been configured in topcat.json.
+
+![browse-configure-job.png](images/browse-configure-job.png "Configure job action button")
+
+**With no input datasets/datafiles**
+
+To run a job without any input datasets or datafiles, go to the ‘My Jobs’ page and click on the green ‘Configure New Job’ button in the top right.
+
+![no-job-inputs.png](images/no-job-inputs.png "Configure job button on My Jobs page")
+
+If there are items in your cart, you will get a popup asking whether you want to run a job on the cart items or not. Choose ‘Run Job With No Inputs’ to run a job without any input datasets or datafiles.
+
+![choose-job-inputs.png](images/choose-job-inputs.png "Choose job inputs popup")
