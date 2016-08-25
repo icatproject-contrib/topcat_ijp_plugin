@@ -1,3 +1,7 @@
+.flex-container {
+  display: flex;
+}
+
 .filter-row {
   padding-right: 5px;
   padding-bottom: 5px;
@@ -20,24 +24,10 @@
   height: calc(100% - 57px) !important;
 }
 
-.configure-job-btn {
-  margin-top: 17px;
-  margin-bottom: 17px;
-}
-
-.configure-job-dropdown {
-  margin-top: -17px;
-}
-
-.radio-well {
-  padding: 3px;
-  margin: 3px;
-}
-
-.job-options-checkbox {
-  position: relative;
-  left: 5px;
-  top: 2px;
+.configure-job-btn-flex-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .configure-job-box {
@@ -46,11 +36,23 @@
   padding-right: 15px;
 }
 
-.cart-configure-job-btn {
-  margin-right: 5px;
+.job-options-checkbox {
+  position: relative;
+  left: 5px;
+  top: 2px;
 }
 
-.cart-configure-job-dropup {
-  min-width: 0px;
-  width: calc(100% - 5px);
+.boolean-group-label {
+  white-space: nowrap;
+  padding-right: 10px
+}
+
+.boolean-group-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.radio-well {
+  padding: 0px 3px 0px 3px;
+  margin: 0px 5px 5px 5px;
 }

@@ -1,12 +1,12 @@
 <div class="container-fluid">
-<div class="row">
+<div class="row flex-container">
     <div class="col-xs-10"><h1 translate="MY_JOBS.TITLE"></h1></div>
-    <div class="col-xs-2">
-        <button ng-if="myJobsController.ijpFacilities.length === 1 && myJobsController.userFacilities.length === 1" class="btn btn-success pull-right configure-job-btn" ng-click="myJobsController.configureJob(myJobsController.ijpFacilities[0])" translate="MY_JOBS.BUTTON.CONFIGURE_JOB.TEXT"></button>
+    <div class="col-xs-2 configure-job-btn-flex-container">
+        <button ng-if="myJobsController.ijpFacilities.length === 1 && myJobsController.userFacilities.length === 1" class="btn btn-success pull-right" ng-click="myJobsController.configureJob(myJobsController.ijpFacilities[0])" translate="MY_JOBS.BUTTON.CONFIGURE_JOB.TEXT"></button>
         <div ng-if="myJobsController.ijpFacilities.length > 0 && myJobsController.userFacilities.length > 1" class="btn-group pull-right">
-            <button type="button" class="btn btn-success dropdown-toggle configure-job-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  uib-tooltip="{{'MY_JOBS.BUTTON.CONFIGURE_JOB_DROPDOWN.TOOLTIP.TEXT' | translate}}" tooltip-append-to-body="true" tooltip-placement="left">{{ 'MY_JOBS.BUTTON.CONFIGURE_JOB_DROPDOWN.TEXT' | translate }}<span class="caret"></span>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  uib-tooltip="{{'MY_JOBS.BUTTON.CONFIGURE_JOB_DROPDOWN.TOOLTIP.TEXT' | translate}}" tooltip-append-to-body="true" tooltip-placement="left">{{ 'MY_JOBS.BUTTON.CONFIGURE_JOB_DROPDOWN.TEXT' | translate }}<span class="caret"></span>
             </button>
-            <ul class="dropdown-menu configure-job-dropdown">
+            <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="" ng-repeat="ijpFacility in myJobsController.ijpFacilities" ng-click="myJobsController.configureJob(ijpFacility)">{{ ijpFacility.config().title }}</a></li>
             </ul>
         </div>

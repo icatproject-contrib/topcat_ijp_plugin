@@ -43,9 +43,9 @@
                     </div>
                 </div>
 
-                <div ng-if="option.type === 'booleanGroup'">
-                    <label class="control-label" for="{{option.groupName}}">{{option.groupName}}</label>
-                    <span ng-repeat="value in option.values" class="well radio-well"><label class="radio-inline"><input type="radio" name="{{option.groupName}}" ng-model="option.value" value="{{value.programParameter}}">{{value.name}}</label></span>
+                <div class="flex-container" ng-if="option.type === 'booleanGroup'">
+                    <div><label class="control-label boolean-group-label" for="{{option.groupName}}">{{option.groupName}}</label></div>
+                    <div class="boolean-group-flex-container"><span ng-repeat="value in option.values" class="well radio-well"><label class="radio-inline"><input type="radio" name="{{option.groupName}}" ng-model="option.value" value="{{value.programParameter}}">{{value.name}}</label></span></div>
                 </div>
 
             </div>
