@@ -24,19 +24,11 @@
           return facility;
         };
 
-    		this.version = function(){
-    			var out = $q.defer();
-    			this.get('version').then(function(data){
-    				out.resolve(data.version);
-    			}, function(){ out.reject(); });
-    			return out.promise;
-    		};
-
         this.getJobType = helpers.overload({
           'string': function(jobTypeName){
             var out = $q.defer();
-            this.get('jobtype/' + jobTypeName).then(function(allJobTypes){
-              out.resolve(allJobTypes);
+            this.get('jobtype/' + jobTypeName).then(function(jobType){
+              out.resolve(jobType);
             }, function(){ out.reject(); });
 
             return out.promise;
