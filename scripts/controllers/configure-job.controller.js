@@ -129,6 +129,7 @@
         };
 
         this.jobTypeSelected = function(){
+            setupJobDefaults();
             that.form.$setPristine();
         };
 
@@ -178,7 +179,8 @@
                         that.compatibleJobTypes = compatibleJobTypes;
                         that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                         that.loadingJobTypes = false;
-                        setupJobOptions();
+                        setupBooleanGroupOptions();
+                        setupJobDefaults();
                     });
 
                 } else if (inputContainsDatafiles) {
@@ -192,7 +194,8 @@
                     that.compatibleJobTypes = compatibleJobTypes;
                     that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                     that.loadingJobTypes = false;
-                    setupJobOptions();
+                    setupBooleanGroupOptions();
+                    setupJobDefaults();
 
                 } else {
                     //If there is no input, show 'job-only' jobs, where neither datasets nor datafiles are accepted
@@ -200,7 +203,8 @@
                     that.compatibleJobTypes = compatibleJobTypes;
                     that.selectedJobType = _.find(that.compatibleJobTypes, function(jobType){ return jobType.name === $rootScope.selectedJobType; }) || $filter('orderBy')(that.compatibleJobTypes, 'name')[0] || "";
                     that.loadingJobTypes = false;
-                    setupJobOptions();
+                    setupBooleanGroupOptions();
+                    setupJobDefaults();
                 }
 
             });
@@ -220,7 +224,7 @@
             return deferred.promise;
         }
 
-        function setupJobOptions(){
+        function setupBooleanGroupOptions() {
             _.each(that.compatibleJobTypes, function(jobType){
                 //Change structure of any 'boolean group' job options so they are more easily constructible in html
                 //Find unique boolean group names
@@ -247,8 +251,12 @@
                     _.remove(jobType.jobOptions, function(option) { return option.groupName === groupName && option.type !== 'booleanGroup' });
                 });
 
+            });
+        }
+
+        function setupJobDefaults(){
+            _.each(that.compatibleJobTypes, function(jobType){
                 _.each(jobType.jobOptions, function(option){
-                    //Set up default values
                     switch (option.type) {
                         case "boolean":
                             option.value = option.defaultValue || false;
