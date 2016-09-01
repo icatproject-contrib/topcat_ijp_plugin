@@ -125,15 +125,13 @@
             modal.close();
         }
 
-        this.deleteJob = function(clickEvent, job){
-            clickEvent.stopPropagation();
+        this.deleteJob = function(job){
             tc.ijp(facilityName).deleteJob(String(job.jobId)).finally(function(){
                 refresh();
             });
         }
 
-        this.cancelJob = function(clickEvent, job){
-            clickEvent.stopPropagation();
+        this.cancelJob = function(job){
             tc.ijp(facilityName).cancelJob(String(job.jobId)).finally(function(){
                 refresh();
             });
@@ -159,6 +157,7 @@
                         {
                             "condition": function(filterDate, cellDate) {
                                 if (filterDate == "") return true;
+                                //Need to format dates so they are similar. Remove time from cellDate and remove double escapes from filterDate.
                                 return new Date(cellDate.replace(/\s.*$/,'')) >= new Date(filterDate.replace(/\\/g,''));
                             },
                             "placeholder": "From..."
@@ -166,6 +165,7 @@
                         {
                             "condition": function(filterDate, cellDate) {
                                 if (filterDate == "") return true;
+                                //Need to format dates so they are similar. Remove time from cellDate and remove double escapes from filterDate.
                                 return new Date(cellDate.replace(/\s.*$/,'')) <= new Date(filterDate.replace(/\\/g,''));
                             },
                             "placeholder": "To..."
@@ -189,8 +189,8 @@
             });
 
             var actionButtons = '';
-            actionButtons += '<button ng-if="row.entity.status === \'Completed\' || row.entity.status === \'Cancelled\'" class="btn btn-danger btn-xs" translate="MY_JOBS.COLUMN.ACTIONS.BUTTON.DELETE_JOB.TEXT" uib-tooltip="{{\'MY_JOBS.COLUMN.ACTIONS.BUTTON.DELETE_JOB.TOOLTIP.TEXT\' | translate}}" tooltip-placement="right" tooltip-append-to-body="true" ng-click="grid.appScope.deleteJob($event, row.entity)" ng-style="{ \'margin-right\':\'3px\' }"></button>';
-            actionButtons += '<button ng-if="row.entity.status === \'Queued\' || row.entity.status === \'Executing\'" class="btn btn-warning btn-xs" translate="MY_JOBS.COLUMN.ACTIONS.BUTTON.CANCEL_JOB.TEXT" uib-tooltip="{{\'MY_JOBS.COLUMN.ACTIONS.BUTTON.CANCEL_JOB.TOOLTIP.TEXT\' | translate}}" tooltip-placement="right" tooltip-append-to-body="true" ng-click="grid.appScope.cancelJob($event, row.entity)" ng-style="{ \'margin-right\':\'3px\' }"></button>';
+            actionButtons += '<button ng-if="row.entity.status === \'Completed\' || row.entity.status === \'Cancelled\'" class="btn btn-danger btn-xs" translate="MY_JOBS.COLUMN.ACTIONS.BUTTON.DELETE_JOB.TEXT" uib-tooltip="{{\'MY_JOBS.COLUMN.ACTIONS.BUTTON.DELETE_JOB.TOOLTIP.TEXT\' | translate}}" tooltip-placement="right" tooltip-append-to-body="true" ng-click="grid.appScope.deleteJob(row.entity); $event.stopPropagation();" ng-style="{ \'margin-right\':\'3px\' }"></button>';
+            actionButtons += '<button ng-if="row.entity.status === \'Queued\' || row.entity.status === \'Executing\'" class="btn btn-warning btn-xs" translate="MY_JOBS.COLUMN.ACTIONS.BUTTON.CANCEL_JOB.TEXT" uib-tooltip="{{\'MY_JOBS.COLUMN.ACTIONS.BUTTON.CANCEL_JOB.TOOLTIP.TEXT\' | translate}}" tooltip-placement="right" tooltip-append-to-body="true" ng-click="grid.appScope.cancelJob(row.entity); $event.stopPropagation();" ng-style="{ \'margin-right\':\'3px\' }"></button>';
             gridOptions.columnDefs.push({
                 name : 'actions',
                 visible: true,
