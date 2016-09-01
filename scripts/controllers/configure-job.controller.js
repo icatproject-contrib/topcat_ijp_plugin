@@ -53,7 +53,7 @@
                             if (jobOption.value !== "") { jobParameters.push(jobOption.value) }
                             break;
                         default:
-                            if (jobOption.value !== "") {
+                            if (jobOption.value || jobOption.value === 0) {
                                 jobParameters.push(jobOption.programParameter);
                                 jobParameters.push(jobOption.value);
                             }
