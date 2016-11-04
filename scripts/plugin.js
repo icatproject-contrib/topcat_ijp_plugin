@@ -352,6 +352,13 @@ registerTopcatPlugin(function(pluginUrl){
                     }
                 },
                 modifyQuery: function(query){
+                    query.where('not exists (\
+                                        SELECT 1 FROM dataset.parameters AS xDatasetParameter,\
+                                            xDatasetParameter.type AS xDatasetParameterType \
+                                        WHERE xDatasetParameter.dataset = dataset \
+                                            AND xDatasetParameterType.name = \'vicat:superseded\' \
+                                    )');
+
                     _.each(this.gridOptions.externalSelectFilters.filters, function(filter){
                         if (filter.selectedOption) {
                             if (filter.variablePath) {
