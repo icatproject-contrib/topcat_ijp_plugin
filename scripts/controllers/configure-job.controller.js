@@ -15,9 +15,9 @@
         var multipleInputEntities = inputEntities.length > 1;
         var inputDatasetTypes = [];
         var booleanGroupNames = [];
-        this.numInputEntities = inputEntities.length;
-        this.loadingJobTypes = true;
-        this.form = {};
+        that.numInputEntities = inputEntities.length;
+        that.loadingJobTypes = true;
+        that.form = {};
         getCompatibleJobTypes();
 
         this.checkFormValidity = function() {
@@ -34,7 +34,7 @@
             that.platformIsWindows = navigator.platform.match(/Win/);
             that.failedSubmissions = [];
 
-            if (this.confirmModal) this.confirmModal.close();
+            if (that.confirmModal) that.confirmModal.close();
             that.isSubmitting = true;
             that.submittingModal = $uibModal.open({
                         templateUrl : pluginUrl + 'views/submitting-job-modal.html',
@@ -112,7 +112,7 @@
             //Opens a modal asking user whether they want to submit a single or multiple jobs
             that.form.$setSubmitted();
             if (that.form.$valid){
-                this.confirmModal = $uibModal.open({
+                that.confirmModal = $uibModal.open({
                     templateUrl : pluginUrl + 'views/confirm-job-modal.html',
                     scope: $scope,
                     size : 'med'
