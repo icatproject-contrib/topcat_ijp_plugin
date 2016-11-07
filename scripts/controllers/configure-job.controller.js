@@ -20,13 +20,7 @@
         that.form = {};
         getCompatibleJobTypes();
 
-        this.checkFormValidity = function() {
-            that.form.$setSubmitted();
-            if (that.form.$valid){ return true }
-            return false;
-        }
-
-        this.submitJob = function(submitMultipleJobs) {
+        var submitJob = function(submitMultipleJobs) {
             var promises = [];
             var jobParameters = [];
             that.jobIds = [];
@@ -108,6 +102,14 @@
 
         };
 
+        this.submitSingleJob = function() {
+            submitJob(false);
+        };
+
+        this.submitMultipleJobs = function() {
+            submitJob(true);
+        };
+
         this.isInteractive = function() {
             return that.selectedJobType.type === 'interactive';
         }
@@ -122,6 +124,12 @@
 
         this.isMultipleBatch = function() {
             return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple !== true && that.numInputEntities > 1;
+        }
+
+        this.checkFormValidity = function() {
+            that.form.$setSubmitted();
+            if (that.form.$valid){ return true }
+            return false;
         }
 
         this.openConfirmJobModal = function() {

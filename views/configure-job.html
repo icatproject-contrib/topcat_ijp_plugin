@@ -60,7 +60,7 @@
     <div ng-if="configureJobController.compatibleJobTypes.length > 0">
         <span ng-if="configureJobController.isInteractive()">
             <button class="btn btn-primary"
-                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitJob(false) : null"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.INTERACTIVE.TEXT"></button>
             <button class="btn btn-warning"
                     ng-click="configureJobController.close()"
@@ -68,7 +68,7 @@
         </span>
         <span ng-if="configureJobController.isBatchSingular()">
             <button class="btn btn-primary"
-                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitJob(false) : null"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
             <button class="btn btn-warning"
                     ng-click="configureJobController.close()"
@@ -84,7 +84,7 @@
         </span>
         <span ng-if="configureJobController.isMultipleBatch()">
             <button class="btn btn-primary"
-                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitJob(true) : null"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitMultipleJobs() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TEXT"
                     uib-tooltip="{{'CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TOOLTIP.TEXT' | translate : { numJobs: configureJobController.numInputEntities } }}"
                     tooltip-append-to-body="true"
