@@ -244,6 +244,18 @@ registerTopcatPlugin(function(pluginUrl){
                 });
             });
 
+            function modifyQueryForLatestVersion(query) {
+                query.where('not exists ('
+                              + 'SELECT 1 FROM dataset.parameters AS xDatasetParameter, xDatasetParameter.type AS xDatasetParameterType '
+                              + 'WHERE xDatasetParameter.dataset = dataset AND xDatasetParameterType.name = \'vicat:superseded\''
+                              + ')');
+            }
+
+
+            tc.ui().registerExternalGridFilter(['browse'], {
+                modifyQuery: modifyQueryForLatestVersion
+            });
+
             //Add select boxes above the 'Browse' grid to allow filtering by job type (or any Topcat jpql variable)
             tc.ui().registerExternalGridFilter(['browse'], {
                 template: '<div ng-if="browseEntitiesController.gridOptions.externalSelectFilters.filters.length !== 0" class ="form-inline">' +
@@ -352,13 +364,6 @@ registerTopcatPlugin(function(pluginUrl){
                     }
                 },
                 modifyQuery: function(query){
-                    query.where('not exists (\
-                                        SELECT 1 FROM dataset.parameters AS xDatasetParameter,\
-                                            xDatasetParameter.type AS xDatasetParameterType \
-                                        WHERE xDatasetParameter.dataset = dataset \
-                                            AND xDatasetParameterType.name = \'vicat:superseded\' \
-                                    )');
-
                     _.each(this.gridOptions.externalSelectFilters.filters, function(filter){
                         if (filter.selectedOption) {
                             if (filter.variablePath) {
