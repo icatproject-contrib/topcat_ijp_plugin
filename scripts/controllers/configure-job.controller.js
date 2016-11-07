@@ -108,6 +108,22 @@
 
         };
 
+        this.isInteractive = function() {
+            return that.selectedJobType.type === 'interactive';
+        }
+
+        this.isBatchSingular = function() {
+            return that.selectedJobType.type === 'batch' && that.numInputEntities <= 1;
+        }
+
+        this.isBatchMultiple = function() {
+            return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple === true && that.numInputEntities > 1;
+        }
+
+        this.isMultipleBatch = function() {
+            return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple !== true && that.numInputEntities > 1;
+        }
+
         this.openConfirmJobModal = function() {
             //Opens a modal asking user whether they want to submit a single or multiple jobs
             that.form.$setSubmitted();
