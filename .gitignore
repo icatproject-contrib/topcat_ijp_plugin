@@ -1,3 +1,12 @@
+# visual studio code
+.vscode
 
+# maven
+target
+
+# node / npm
 node_modules/
+
+# Mac OSX
 .DS_Store
+
