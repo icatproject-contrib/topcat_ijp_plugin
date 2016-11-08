@@ -1,6 +1,6 @@
 # Topcat IJP Plugin
 
-A Topcat plugin that enables the configuration and submission of jobs to the ICAT Job Portal on data viewed in Topcat. 
+A Topcat plugin that enables the configuration and submission of jobs to the ICAT Job Portal on data viewed in Topcat.
 
 ## Configuration
 
@@ -11,7 +11,7 @@ This plugin requires some additional configuration options in **topcat.json** an
 The following configuration options are added within the existing 'facilities' attribute in topcat.json
 
 ```
-  {    
+  {
       "facilities": [
           {
               "ijpUrl": "https://example.com"
@@ -29,13 +29,37 @@ The following configuration options are added within the existing 'facilities' a
                                }]
                            }
                        }
+                  },
+                  "dataset": {
+                      "metaTabs": [
+                          {
+                              "title": "METATABS.DATAFILE.PARAMETERS",
+                              "items": [
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='STRING'].stringValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value}}</span>"
+                                  },
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='NUMERIC'].numericValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value}}</span>"
+                                  },
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='DATE_AND_TIME'].datetimeValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value | date:'yyyy-MM-dd'}}</span>"
+                                  }
+                              ]
+                          }
+                      ]
                   }
               }
           }
       ]
   }
 ```
-the above attributes are defined as: 
+the above attributes are defined as:
 
   * "facilities"
     * [facility]
