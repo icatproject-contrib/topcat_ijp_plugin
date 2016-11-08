@@ -6,7 +6,13 @@ A Topcat plugin that enables the configuration and submission of jobs to the ICA
 
 This plugin requires some additional configuration options in **topcat.json** and some additional translation strings in **lang.json**.
 
-There are 2 provided examples that should be close to expected configuration. These can be found in `./config/`.
+There are 2 provided examples that should be close to expected configuration. These can be
+found in `./config/`. Any values in these config files surrounded with `<>` that cause a
+syntax error in the json file are expected to be replaced:
+  - `<ICAT_URL>`
+  - `<IDS_URL>`
+  - `<IJP_URL>`
+  - `<IJP_PLUGIN_URL>`
 
 ### topcat.json
 
