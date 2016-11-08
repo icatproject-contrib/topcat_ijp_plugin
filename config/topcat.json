@@ -212,9 +212,9 @@
         {
             "name": "LSF",
             "title": "Octopus",
-            "icatUrl": <ICAT_URL>, //e.g. "https://vm47.nubes.stfc.ac.uk:8181"
-            "idsUrl": <IDS_URL>, //e.g. "https://vm47.nubes.stfc.ac.uk:8181"
-            "ijpUrl": <IJP_URL>, //e.g. "https://vm190.nubes.stfc.ac.uk:8181"
+            "icatUrl": <ICAT_URL e.g. "https://vm47.nubes.stfc.ac.uk:8181">,
+            "idsUrl": <IDS_URL e.g. "https://vm47.nubes.stfc.ac.uk:8181">,
+            "ijpUrl": <IJP_URL e.g. "https://vm190.nubes.stfc.ac.uk:8181">,
             "hierarchy": [
                 "facility",
                 "dataset",
@@ -233,7 +233,7 @@
             "downloadTransportTypes": [
                 {
                     "type" : "https",
-                    "idsUrl": <IDS_URL> //e.g. "https://vm47.nubes.stfc.ac.uk:8181"
+                    "idsUrl": <IDS_URL e.g. "https://vm47.nubes.stfc.ac.uk:8181">
                 }
             ],
             "admin":{
@@ -516,6 +516,6 @@
         }
     ],
     "plugins" : [
-        <IJP_PLUGIN_URL> //e.g "https://vm47.nubes.stfc.ac.uk:8181/topcat_ijp_plugin"
+        <IJP_PLUGIN_URL e.g "https://vm47.nubes.stfc.ac.uk:8181/topcat_ijp_plugin">
     ]
 }
