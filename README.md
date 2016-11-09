@@ -6,6 +6,14 @@ A Topcat plugin that enables the configuration and submission of jobs to the ICA
 
 This plugin requires some additional configuration options in **topcat.json** and some additional translation strings in **lang.json**.
 
+There are 2 provided examples that should be close to expected configuration. These can be
+found in `./config/`. Any values in these config files surrounded with `<>` that cause a
+syntax error in the json file are expected to be replaced:
+  - `<ICAT_URL>`
+  - `<IDS_URL>`
+  - `<IJP_URL>`
+  - `<IJP_PLUGIN_URL>`
+
 ### topcat.json
 
 The following configuration options are added within the existing 'facilities' attribute in topcat.json
@@ -29,6 +37,30 @@ The following configuration options are added within the existing 'facilities' a
                                }]
                            }
                        }
+                  },
+                  "dataset": {
+                      "metaTabs": [
+                          {
+                              "title": "METATABS.DATAFILE.PARAMETERS",
+                              "items": [
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='STRING'].stringValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value}}</span>"
+                                  },
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='NUMERIC'].numericValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value}}</span>"
+                                  },
+                                  {
+                                      "label": "",
+                                      "field": "datasetParameter[entity.type.valueType=='DATE_AND_TIME'].datetimeValue",
+                                      "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value | date:'yyyy-MM-dd'}}</span>"
+                                  }
+                              ]
+                          }
+                      ]
                   }
               }
           }
