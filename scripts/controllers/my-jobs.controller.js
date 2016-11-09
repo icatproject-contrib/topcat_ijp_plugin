@@ -31,20 +31,21 @@
             appScopeProvider: this
             }, {
             "enableFiltering": true,
-                "columnDefs": [
-                    {
-                        "field": "jobId"
-                    },
-                    {
-                        "field": "name"
-                    },
-                    {
-                        "field": "date"
-                    },
-                    {
-                        "field": "status"
-                    }
-                ]
+            "columnDefs": [
+                {
+                    "field": "jobId",
+                    sortingAlgorithm: function(a, b) { return Math.sign(a - b);}
+                },
+                {
+                    "field": "name"
+                },
+                {
+                    "field": "date"
+                },
+                {
+                    "field": "status"
+                }
+            ]
         });
 
         setUpGridOptions();
