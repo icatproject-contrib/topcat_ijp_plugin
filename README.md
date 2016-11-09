@@ -1,6 +1,6 @@
 # Topcat IJP Plugin
 
-A Topcat plugin that enables the configuration and submission of jobs to the ICAT Job Portal on data viewed in Topcat. 
+A Topcat plugin that enables the configuration and submission of jobs to the ICAT Job Portal on data viewed in Topcat.
 
 ## Configuration
 
@@ -11,7 +11,7 @@ This plugin requires some additional configuration options in **topcat.json** an
 The following configuration options are added within the existing 'facilities' attribute in topcat.json
 
 ```
-  {    
+  {
       "facilities": [
           {
               "ijpUrl": "https://example.com"
@@ -35,7 +35,7 @@ The following configuration options are added within the existing 'facilities' a
       ]
   }
 ```
-the above attributes are defined as: 
+the above attributes are defined as:
 
   * "facilities"
     * [facility]
@@ -174,16 +174,29 @@ The rest of the translation strings can be appended to the lang.json file and ar
             },
             "BUTTON" : {
                 "SUBMIT_JOB" : {
-                    "TEXT" : "Submit Job"
-                },
-                "SUBMIT_MULTIPLE_JOBS" : {
-                    "TEXT" : "Submit Multiple Jobs",
-                    "TOOLTIP" : {
-                        "TEXT" : "NOTE: This will submit {{numJobs}} jobs, one for each cart item. "
+                    "MULTIPLE_BATCH" : {
+                        "TEXT" : "Submit Multiple Jobs",
+                        "TOOLTIP" : {
+                            "TEXT" : "NOTE: This will submit {{numJobs}} jobs, one for each cart item. "
+                        }
+                    },
+                    "BATCH" : {
+                        "TEXT" : "Submit Job"
+                    },
+                    "INTERACTIVE" : {
+                        "TEXT" : "Submit Interactive Job"
                     }
                 },
                 "CLOSE" : {
-                    "TEXT" : "Back"
+                    "MULTIPLE_BATCH" : {
+                        "TEXT" : "Cancel"
+                    },
+                    "BATCH" : {
+                        "TEXT" : "Cancel"
+                    },
+                    "INTERACTIVE" : {
+                        "TEXT" : "Close"
+                    }
                 }
             }
         }

@@ -15,18 +15,12 @@
         var multipleInputEntities = inputEntities.length > 1;
         var inputDatasetTypes = [];
         var booleanGroupNames = [];
-        this.numInputEntities = inputEntities.length;
-        this.loadingJobTypes = true;
-        this.form = {};
+        that.numInputEntities = inputEntities.length;
+        that.loadingJobTypes = true;
+        that.form = {};
         getCompatibleJobTypes();
 
-        this.checkFormValidity = function() {
-            that.form.$setSubmitted();
-            if (that.form.$valid){ return true }
-            return false;
-        }
-
-        this.submitJob = function(submitMultipleJobs) {
+        var submitJob = function(submitMultipleJobs) {
             var promises = [];
             var jobParameters = [];
             that.jobIds = [];
@@ -34,7 +28,7 @@
             that.platformIsWindows = navigator.platform.match(/Win/);
             that.failedSubmissions = [];
 
-            if (this.confirmModal) this.confirmModal.close();
+            if (that.confirmModal) that.confirmModal.close();
             that.isSubmitting = true;
             that.submittingModal = $uibModal.open({
                         templateUrl : pluginUrl + 'views/submitting-job-modal.html',
@@ -108,11 +102,41 @@
 
         };
 
+        this.submitSingleJob = function() {
+            submitJob(false);
+        };
+
+        this.submitMultipleJobs = function() {
+            submitJob(true);
+        };
+
+        this.isInteractive = function() {
+            return that.selectedJobType.type === 'interactive';
+        }
+
+        this.isBatchSingular = function() {
+            return that.selectedJobType.type === 'batch' && that.numInputEntities <= 1;
+        }
+
+        this.isBatchMultiple = function() {
+            return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple === true && that.numInputEntities > 1;
+        }
+
+        this.isMultipleBatch = function() {
+            return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple !== true && that.numInputEntities > 1;
+        }
+
+        this.checkFormValidity = function() {
+            that.form.$setSubmitted();
+            if (that.form.$valid){ return true }
+            return false;
+        }
+
         this.openConfirmJobModal = function() {
             //Opens a modal asking user whether they want to submit a single or multiple jobs
             that.form.$setSubmitted();
             if (that.form.$valid){
-                this.confirmModal = $uibModal.open({
+                that.confirmModal = $uibModal.open({
                     templateUrl : pluginUrl + 'views/confirm-job-modal.html',
                     scope: $scope,
                     size : 'med'

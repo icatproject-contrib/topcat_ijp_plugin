@@ -58,10 +58,41 @@
 
 <div class="modal-footer">
     <div ng-if="configureJobController.compatibleJobTypes.length > 0">
-        <button class="btn btn-primary" ng-if="configureJobController.selectedJobType.type === 'interactive' || configureJobController.numInputEntities <= 1" ng-click="configureJobController.checkFormValidity() ? configureJobController.submitJob(false) : null" translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.TEXT"></button>
-        <button class="btn btn-primary" ng-if="configureJobController.selectedJobType.type === 'batch' && configureJobController.selectedJobType.multiple === true && configureJobController.numInputEntities > 1" ng-click="configureJobController.checkFormValidity() ? configureJobController.openConfirmJobModal() : null" translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.TEXT"></button>
-        <button class="btn btn-primary" ng-if="configureJobController.selectedJobType.type === 'batch' && configureJobController.selectedJobType.multiple !== true && configureJobController.numInputEntities > 1" ng-click="configureJobController.checkFormValidity() ? configureJobController.submitJob(true) : null" translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_MULTIPLE_JOBS.TEXT" uib-tooltip="{{'CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_MULTIPLE_JOBS.TOOLTIP.TEXT' | translate : { numJobs: configureJobController.numInputEntities } }}" tooltip-append-to-body="true" tooltip-placement="top"></button>
-        <button class="btn btn-warning" ng-click="configureJobController.close()" translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.TEXT"></button>
+        <span ng-if="configureJobController.isInteractive()">
+            <button class="btn btn-primary"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.INTERACTIVE.TEXT"></button>
+            <button class="btn btn-warning"
+                    ng-click="configureJobController.close()"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.INTERACTIVE.TEXT"></button>
+        </span>
+        <span ng-if="configureJobController.isBatchSingular()">
+            <button class="btn btn-primary"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
+            <button class="btn btn-warning"
+                    ng-click="configureJobController.close()"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.BATCH.TEXT"></button>
+        </span>
+        <span ng-if="configureJobController.isBatchMultiple()">
+            <button class="btn btn-primary"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.openConfirmJobModal() : null"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
+            <button class="btn btn-warning"
+                    ng-click="configureJobController.close()"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.BATCH.TEXT"></button>
+        </span>
+        <span ng-if="configureJobController.isMultipleBatch()">
+            <button class="btn btn-primary"
+                    ng-click="configureJobController.checkFormValidity() ? configureJobController.submitMultipleJobs() : null"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TEXT"
+                    uib-tooltip="{{'CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TOOLTIP.TEXT' | translate : { numJobs: configureJobController.numInputEntities } }}"
+                    tooltip-append-to-body="true"
+                    tooltip-placement="top"></button>
+            <button class="btn btn-warning"
+                    ng-click="configureJobController.close()"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.MULTIPLE_BATCH.TEXT"></button>
+        </span>
     </div>
 
     <div ng-if="configureJobController.compatibleJobTypes.length === 0">
