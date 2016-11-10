@@ -554,8 +554,8 @@
         },
         "DATASET_TYPE" : {
             "TABTITLE" : "Dataset Type",
-            "NAME" : "Name",
-            "DESCRIPTION" : "Description"
+            "NAME" : "Dataset Type",
+            "DESCRIPTION" : "Dataset Type Description"
         },
         "DATASET_PARAMETER" : {
             "TABTITLE" : "Dataset Parameters",
