@@ -429,12 +429,7 @@
                                 {
                                     "field": "modTime",
                                     "template": "{{item.value | date:'yyyy-MM-dd HH:mm:ss'}}"
-                                }
-                            ]
-                        },
-                        {
-                            "title": "METATABS.DATAFILE.PARAMETERS",
-                            "items": [
+                                },
                                 {
                                     "label": "",
                                     "field": "datasetParameter[entity.type.valueType=='STRING'].stringValue",
@@ -449,12 +444,7 @@
                                     "label": "",
                                     "field": "datasetParameter[entity.type.valueType=='DATE_AND_TIME'].datetimeValue",
                                     "template": "<span class='label'>{{item.entity.type.name}}</span><span class='value'>{{item.value | date:'yyyy-MM-dd'}}</span>"
-                                }
-                            ]
-                        },
-                        {
-                            "title": "METATABS.DATASET_TYPE.TABTITLE",
-                            "items": [
+                                },
                                 {
                                     "field": "datasetType.name"
                                 },
