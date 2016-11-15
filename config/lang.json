@@ -154,8 +154,8 @@
                 "DOI": "Doi",
                 "FILE_SIZE": "File Size",
                 "CHECKSUM": "Checksum",
-                "DATAFILE_CREATE_TIME": "Create Time",
-                "DATAFILE_MOD_TIME": "Modified Time"
+                "CREATE_TIME": "Create Time",
+                "MOD_TIME": "Modified Time"
             },
             "ACTIONS":{
                 "NAME": "Actions",
@@ -786,5 +786,28 @@
         "MINUTES": "minutes",
         "SECOND": "second",
         "SECONDS": "seconds"
+    },
+    "DOWNLOAD_ENTITY_ACTION_BUTTON": {
+        "TEXT": "Download",
+        "TOOLTIP": {
+            "TEXT": "Click to download"
+        }
+    },
+    "CONFIGURE_JOB_ENTITY_ACTION_BUTTON": {
+        "TEXT": "Configure Job",
+        "TOOLTIP": {
+            "TEXT": "Configure job"
+        }
+    },
+    "LANDING_PAGE": {
+        "DOWNLOAD": {
+            "TITLE": "Download",
+            "NEXT_BUTTON": {
+                "TEXT": "Next"
+            },
+            "CANCEL_BUTTON": {
+                "TEXT": "Cancel"
+            }
+        }
     }
 }
