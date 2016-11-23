@@ -1,0 +1,27 @@
+<div>
+    <h3 ng-show="provenanceDetailsController.input.datasets.length > 0 || provenanceDetailsController.input.datafiles.length > 0">Inputs</h3>
+    <h4 ng-show="provenanceDetailsController.input.datasets.length > 0">Datasets</h4>
+    <div ng-repeat="input in provenanceDetailsController.input.datasets">
+        {{ input.name }}
+    </div>
+    <h4 ng-show="provenanceDetailsController.input.datafiles.length > 0">Datafiles</h4>
+    <div ng-repeat="input in provenanceDetailsController.input.datafiles">
+        {{ input.name }}
+    </div>
+</div>
+<div>
+    <h3 ng-show="provenanceDetailsController.output.datasets.length > 0 || provenanceDetailsController.output.datafiles.length > 0">Outputs</h3>
+    <h4 ng-show="provenanceDetailsController.output.datasets.length > 0">Datasets</h4>
+    <div ng-repeat="output in provenanceDetailsController.output.datasets">
+        {{ output.name }}
+    </div>
+    <h4 ng-show="provenanceDetailsController.output.datafiles.length > 0">Datafiles</h4>
+    <div ng-repeat="output in provenanceDetailsController.output.datafiles">
+        {{ output.name }}
+    </div>
+</div>
+<hr>
+<div>
+    <h3>Arguments</h3>
+    {{provenanceDetailsController.arguments}}
+</div>

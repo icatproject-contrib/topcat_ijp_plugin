@@ -580,6 +580,7 @@
             "NAME": "Job Type",
             "DATE": "Submitted",
             "STATUS": "Status",
+            "PROVENANCE_ID": "Provenance",
             "ACTIONS": {
               "NAME": "Actions",
                 "BUTTON" : {

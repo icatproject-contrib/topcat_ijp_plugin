@@ -4,6 +4,7 @@ registerTopcatPlugin(function(pluginUrl){
 
     var controllersUrl = pluginUrl + '/scripts/controllers/';
     var servicesUrl = pluginUrl + '/scripts/services/';
+    var directivesUrl = pluginUrl + '/scripts/directives/';
     var decoratorsUrl = pluginUrl + '/scripts/decorators/';
     var viewsUrl = pluginUrl + '/views/';
     var stylesUrl = pluginUrl + '/styles/';
@@ -12,6 +13,7 @@ registerTopcatPlugin(function(pluginUrl){
         scripts: [
             controllersUrl + 'my-jobs.controller.js',
             controllersUrl + 'configure-job.controller.js',
+            directivesUrl + 'provenance-details.directive.js',
             servicesUrl + 'ijp-remote-desktop.service.js',
             servicesUrl + 'ijp.service.js',
             decoratorsUrl + 'tc-facility.decorator.js',
