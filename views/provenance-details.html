@@ -1,24 +1,10 @@
-<div>
-    <h3 ng-show="provenanceDetailsController.input.datasets.length > 0 || provenanceDetailsController.input.datafiles.length > 0">Inputs</h3>
-    <h4 ng-show="provenanceDetailsController.input.datasets.length > 0">Datasets</h4>
-    <div ng-repeat="input in provenanceDetailsController.input.datasets">
-        {{ input.name }}
-    </div>
-    <h4 ng-show="provenanceDetailsController.input.datafiles.length > 0">Datafiles</h4>
-    <div ng-repeat="input in provenanceDetailsController.input.datafiles">
-        {{ input.name }}
-    </div>
+<div ng-show="provenanceDetailsController.input.gridOptions.data.length > 0 || provenanceDetailsController.input.gridOptions.data.length > 0">
+    <h3>Inputs</h3>
+    <div ui-grid="provenanceDetailsController.input.gridOptions" ui-grid-pagination ui-grid-auto-resize ui-grid-selection ui-grid-selection ui-grid-resize-columns class="provenance-grid"></div>
 </div>
-<div>
-    <h3 ng-show="provenanceDetailsController.output.datasets.length > 0 || provenanceDetailsController.output.datafiles.length > 0">Outputs</h3>
-    <h4 ng-show="provenanceDetailsController.output.datasets.length > 0">Datasets</h4>
-    <div ng-repeat="output in provenanceDetailsController.output.datasets">
-        {{ output.name }}
-    </div>
-    <h4 ng-show="provenanceDetailsController.output.datafiles.length > 0">Datafiles</h4>
-    <div ng-repeat="output in provenanceDetailsController.output.datafiles">
-        {{ output.name }}
-    </div>
+<div ng-show="provenanceDetailsController.output.gridOptions.data.length > 0 || provenanceDetailsController.output.gridOptions.data.length > 0">
+    <h3>Outputs</h3>
+    <div ui-grid="provenanceDetailsController.output.gridOptions" ui-grid-pagination ui-grid-auto-resize ui-grid-selection ui-grid-selection ui-grid-resize-columns class="provenance-grid"></div>
 </div>
 <hr>
 <div>
