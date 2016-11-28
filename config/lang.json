@@ -690,6 +690,7 @@
                     }
                 },
                 "CLOSE" : {
+                    "TEXT" : "Close",
                     "MULTIPLE_BATCH" : {
                         "TEXT" : "Cancel"
                     },
