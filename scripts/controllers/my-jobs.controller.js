@@ -90,6 +90,11 @@
                     $interval.cancel(checkJobStatusInterval);
                 });
             }
+
+            that.jobDetailsModal.result.finally(function() {
+                that.tabs.setActive(1);
+            })
+
         };
 
         this.configureJob = function(ijpFacility){
@@ -137,6 +142,18 @@
                 refresh();
             });
         }
+
+        this.tabs = (function() {
+            var active = 1;
+            return {
+                isActive: function(n) {
+                    return active === n;
+                },
+                setActive: function(n) {
+                    active = n;
+                }
+            }
+        })();
 
         function setUpGridOptions(){
 

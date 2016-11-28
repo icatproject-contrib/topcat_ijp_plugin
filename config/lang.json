@@ -580,6 +580,7 @@
             "NAME": "Job Type",
             "DATE": "Submitted",
             "STATUS": "Status",
+            "PROVENANCE_ID": "Provenance",
             "ACTIONS": {
               "NAME": "Actions",
                 "BUTTON" : {
@@ -616,7 +617,18 @@
                 "NO_OUTPUT": "There is no standard output for this job",
                 "TABS" : {
                     "STANDARD_OUTPUT": "Standard Output",
-                    "ERROR_OUTPUT": "Error Output"
+                    "ERROR_OUTPUT": "Error Output",
+                    "PROVENANCE": {
+                        "TITLE": "Provenance",
+                        "INPUT_TITLE": "Inputs",
+                        "OUTPUT_TITLE": "Outputs",
+                        "ARGUMENTS_TITLE": "Arguments",
+                        "COLUMNS": {
+                            "NAME": "Name",
+                            "TYPE": "Type",
+                            "DATATYPE": "Datatype"
+                        }
+                    }
                 },
                 "BUTTON" : {
                     "CLOSE" : {
@@ -678,6 +690,7 @@
                     }
                 },
                 "CLOSE" : {
+                    "TEXT" : "Close",
                     "MULTIPLE_BATCH" : {
                         "TEXT" : "Cancel"
                     },

@@ -1,0 +1,13 @@
+<div ng-if="provenanceDetailsController.input.gridOptions.data.length > 0">
+    <h3 translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.PROVENANCE.INPUT_TITLE"></h3>
+    <div ui-grid="provenanceDetailsController.input.gridOptions" ui-grid-pagination ui-grid-selection ui-grid-selection ui-grid-resize-columns class="provenance-grid"></div>
+</div>
+<div ng-if="provenanceDetailsController.output.gridOptions.data.length > 0">
+    <h3 translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.PROVENANCE.OUTPUT_TITLE">Outputs</h3>
+    <div ui-grid="provenanceDetailsController.output.gridOptions" ui-grid-pagination ui-grid-selection ui-grid-selection ui-grid-resize-columns class="provenance-grid"></div>
+</div>
+<hr>
+<div>
+    <h3>Arguments</h3>
+    {{provenanceDetailsController.arguments}}
+</div>

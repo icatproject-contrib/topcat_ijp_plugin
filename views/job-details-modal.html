@@ -7,13 +7,14 @@
     <div class="modal-body">
         <div take-up-remaining-height>
             <ul class="nav nav-tabs nav-tabs-head" role="tablist">
-                <li class="active"><a data-target="#job-output" role="tab" data-toggle="tab" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.STANDARD_OUTPUT"></a></li>
-                <li><a ng-show="myJobsController.errorOutput.length > 0" data-target="#error-output" role="tab"  data-toggle="tab" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.ERROR_OUTPUT"></a></li>
+                <li ng-class="{ active: myJobsController.tabs.isActive(1) }"><a ng-click="myJobsController.tabs.setActive(1)" role="tab" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.STANDARD_OUTPUT"></a></li>
+                <li ng-class="{ active: myJobsController.tabs.isActive(2) }"><a ng-click="myJobsController.tabs.setActive(2)" role="tab" ng-show="myJobsController.errorOutput.length > 0" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.ERROR_OUTPUT"></a></li>
+                <li ng-class="{ active: myJobsController.tabs.isActive(3) }"><a ng-click="myJobsController.tabs.setActive(3)" role="tab" ng-show="myJobsController.selectedJob.provenanceId > 0" translate="MY_JOBS.JOB_DETAILS.MODAL.TABS.PROVENANCE.TITLE"></a></li>
             </ul>
 
             <div id="jobDetailsTab" class="tab-content job-details-tab-content" take-up-remaining-height>
 
-                <div role="tabpanel" class="tab-pane active" id="job-output" ng-style="{ 'height': '100%' }">
+                <div ng-if="myJobsController.tabs.isActive(1)" role="tabpanel" id="job-output" ng-style="{ 'height': '100%' }">
                     <div class="panel panel-default job-details-panel">
                         <div ng-show="!myJobsController.isLoadingStandardOutput && myJobsController.standardOutput.length > 0" class="panel-body" ng-bind-html="myJobsController.standardOutput"></div>
                         <div ng-show="!myJobsController.isLoadingStandardOutput && myJobsController.standardOutput.length === 0" class="panel-body" translate="MY_JOBS.JOB_DETAILS.MODAL.NO_OUTPUT"></div>
@@ -21,12 +22,19 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="error-output" ng-style="{ 'height': '100%' }">
+                <div ng-if="myJobsController.tabs.isActive(2)" role="tabpanel" id="error-output" ng-style="{ 'height': '100%' }">
                     <div class="panel panel-default job-details-panel">
                         <div class="panel-body" ng-bind-html="myJobsController.errorOutput"></div>
                     </div>
                 </div>
 
+                <div ng-if="myJobsController.tabs.isActive(3)" role="tabpanel" id="provenance" ng-style="{ 'height': '100%'}">
+                    <div class="panel panel-default job-details-panel">
+                        <div class="panel-body">
+                            <provenance-details ng-if="myJobsController.selectedJob.provenanceId > 0" provenance-id="{{ myJobsController.selectedJob.provenanceId }}"></provenance-details>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
