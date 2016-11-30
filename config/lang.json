@@ -735,8 +735,11 @@
                 "ERROR_MESSAGE" : "Error response"
             },
             "BUTTON" : {
-                "CLOSE" : {
+                "BACK" : {
                     "TEXT" : "Back"
+                },
+                "CLOSE" : {
+                    "TEXT" : "Close"
                 }
             }
         }
