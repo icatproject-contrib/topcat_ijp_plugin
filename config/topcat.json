@@ -383,8 +383,7 @@
                         "enableConfigureJob": true,
                         "columnDefs": [
                             {
-                                "field": "name",
-                                "link": true
+                                "field": "name"
                             },
                             {
                                 "field": "size|bytes"
