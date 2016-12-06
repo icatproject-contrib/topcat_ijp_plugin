@@ -750,6 +750,12 @@
             "TEXT": "Click to configure a job on this entity"
         }
     },
+    "SHOW_DATASET_ENTITY_ACTION_BUTTON": {
+        "TEXT": "Show Datafiles",
+        "TOOLTIP": {
+            "TEXT": "Click to show the datafiles for this dataset"
+        }
+    },
     "SELECT_FILTERS": {
         "FILTER_TEXT": "Filter by {{filterName}}...",
          "DATASET": {
