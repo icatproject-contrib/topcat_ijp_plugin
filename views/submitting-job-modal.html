@@ -49,5 +49,10 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-warning" ng-click="configureJobController.close(configureJobController.submittingModal)" translate="SUBMITTING_JOB.MODAL.BUTTON.CLOSE.TEXT"></button>
+    <button class="btn btn-warning"
+        ng-click="configureJobController.close(configureJobController.submittingModal)"
+        translate="SUBMITTING_JOB.MODAL.BUTTON.BACK.TEXT"></button>
+    <button class="btn btn-warning"
+        ng-click="configureJobController.close(configureJobController.submittingModal); configureJobController.close();"
+        translate="SUBMITTING_JOB.MODAL.BUTTON.CLOSE.TEXT"></button>
 </div>
