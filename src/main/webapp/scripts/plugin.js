@@ -11,6 +11,9 @@ registerTopcatPlugin(function(pluginUrl){
 
     return {
         scripts: [
+            [pluginUrl + 'bower_components/jquery-no-vnc/dist/jquery-no-vnc.js', function(){
+				return $.fn.noVnc !== undefined;
+			}],
             controllersUrl + 'my-jobs.controller.js',
             controllersUrl + 'configure-job.controller.js',
             directivesUrl + 'provenance-details.directive.js',

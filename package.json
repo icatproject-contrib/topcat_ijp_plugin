@@ -1,0 +1,18 @@
+{
+  "name": "topcat_ijp_plugin",
+  "version": "1.0.0",
+  "description": "topcat ijp plugin",
+  "dependencies": {
+    "bower": "1.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icatproject/topcat_ijp_plugin.git"
+  },
+  "author": "icatproject",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/icatproject/topcat_ijp_plugin/issues"
+  },
+  "homepage": "https://github.com/icatproject/topcat_ijp_plugin#readme"
+}
