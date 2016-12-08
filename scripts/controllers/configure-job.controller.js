@@ -126,6 +126,11 @@
             return that.selectedJobType.type === 'batch' && that.selectedJobType.multiple !== true && that.numInputEntities > 1;
         }
 
+        this.isSingleJobForced = function() {
+            console.log(that.selectedJobType.forceSingleJob);
+            return that.selectedJobType.forceSingleJob;
+        }
+
         this.checkFormValidity = function() {
             that.form.$setSubmitted();
             if (that.form.$valid){ return true }

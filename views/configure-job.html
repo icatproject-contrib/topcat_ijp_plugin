@@ -74,9 +74,17 @@
                     ng-click="configureJobController.close()"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.BATCH.TEXT"></button>
         </span>
-        <span ng-if="configureJobController.isBatchMultiple()">
+        <span ng-if="configureJobController.isBatchMultiple() && !configureJobController.isSingleJobForced()">
             <button class="btn btn-primary"
                     ng-click="configureJobController.checkFormValidity() ? configureJobController.openConfirmJobModal() : null"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
+            <button class="btn btn-warning"
+                    ng-click="configureJobController.close()"
+                    translate="CONFIGURE_JOB.MODAL.BUTTON.CLOSE.BATCH.TEXT"></button>
+        </span>
+        <span ng-if="configureJobController.isBatchMultiple() && configureJobController.isSingleJobForced()">
+            <button class="btn btn-primary"
+                    ng-click="configureJobController.checkFormValidity() ?  configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
             <button class="btn btn-warning"
                     ng-click="configureJobController.close()"
