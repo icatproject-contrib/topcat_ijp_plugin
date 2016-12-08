@@ -142,6 +142,14 @@ registerTopcatPlugin(function(pluginUrl){
                 });
             });
 
+            //Add button to show show the dataset on the 'browse' table
+            tc.ui().registerEntityActionButton('show-dataset', {
+                entityTypes: ['dataset'],
+                class: 'btn btn-success'
+            }, function(entity){
+                entity.browse();
+            });
+
             function modifyQueryForLatestVersion(query) {
                 query.where('not exists ('
                               + 'SELECT 1 FROM dataset.parameters AS xDatasetParameter, xDatasetParameter.type AS xDatasetParameterType '

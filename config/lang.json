@@ -735,8 +735,11 @@
                 "ERROR_MESSAGE" : "Error response"
             },
             "BUTTON" : {
-                "CLOSE" : {
+                "BACK" : {
                     "TEXT" : "Back"
+                },
+                "CLOSE" : {
+                    "TEXT" : "Close"
                 }
             }
         }
@@ -745,6 +748,12 @@
         "TEXT": "Configure Job",
         "TOOLTIP": {
             "TEXT": "Click to configure a job on this entity"
+        }
+    },
+    "SHOW_DATASET_ENTITY_ACTION_BUTTON": {
+        "TEXT": "Show Datafiles",
+        "TOOLTIP": {
+            "TEXT": "Click to show the datafiles for this dataset"
         }
     },
     "SELECT_FILTERS": {
