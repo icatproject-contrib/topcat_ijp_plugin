@@ -17,6 +17,7 @@ registerTopcatPlugin(function(pluginUrl){
             controllersUrl + 'my-jobs.controller.js',
             controllersUrl + 'configure-job.controller.js',
             directivesUrl + 'provenance-details.directive.js',
+            directivesUrl + 'interactive-job.directive.js',
             servicesUrl + 'ijp-remote-desktop.service.js',
             servicesUrl + 'ijp.service.js',
             decoratorsUrl + 'tc-facility.decorator.js',
