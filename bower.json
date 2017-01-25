@@ -1,0 +1,8 @@
+{
+    "name": "topcat_ijp_plugin",
+    "version": "0.0.1",
+    "appPath": "src/main/webapp",
+    "dependencies": {
+        "jquery-no-vnc": "0.3.0"
+    }
+}

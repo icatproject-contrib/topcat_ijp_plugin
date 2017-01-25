@@ -1,17 +1,18 @@
 {
-  "name": "topcat_plugin",
+  "name": "topcat_ijp_plugin",
   "version": "1.0.0",
-  "description": "",
-  "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "topcat ijp plugin",
+  "dependencies": {
+    "bower": "1.8.0"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-watch": "^1.0.0",
-    "serve-static": "^1.11.1"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icatproject/topcat_ijp_plugin.git"
+  },
+  "author": "icatproject",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/icatproject/topcat_ijp_plugin/issues"
+  },
+  "homepage": "https://github.com/icatproject/topcat_ijp_plugin#readme"
 }

@@ -25,6 +25,7 @@
                 <p><span translate="SUBMITTING_JOB.MODAL.UNIX_INTERACTIVE_SUBMISSION_SUCCESSFUL_MESSAGE"></span></p>
                 <p>rdesktop -u {{configureJobController.interactiveSessionDetails.username}} -p {{configureJobController.interactiveSessionDetails.password}} {{configureJobController.interactiveSessionDetails.host}}</p>
             </div>
+            <interactive-job ng-model="configureJobController.interactiveSessionDetails"></interactive-job>
         </div>
 
         <div ng-if="configureJobController.failedSubmissions.length > 0">
