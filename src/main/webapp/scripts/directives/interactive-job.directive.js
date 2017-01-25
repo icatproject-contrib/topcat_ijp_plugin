@@ -11,7 +11,7 @@
 
                 var ijpInteractivePort = 15900;
 
-                noVnc.connect($scope.username, 15900, $scope.password, "");
+                noVnc.connect($scope.host, 15900, $scope.password, "");
             },
             controllerAs:"interactiveJobController"
         }
