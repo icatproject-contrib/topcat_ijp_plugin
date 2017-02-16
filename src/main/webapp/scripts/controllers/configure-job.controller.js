@@ -83,15 +83,12 @@
         // both seem to work, or at least neither seems worse than the other.
         // In future, I may find an approach that works with one way but not the other,
         // so am leaving both in place at the moment.
-        // See comments tagged with "SOF" for experiments based on Stackoverflow answers
-        // (so far, none are entirely satisfactory).
         
         if (inputContainsDatasets) {
 	        setUpGridOptions(datasetGridOptions,'Dataset');
 	        this.datasetGridOptions = datasetGridOptions;
 	        getInputDatasetFields().then(function(datasetFields){
 	        	that.datasetGridOptions.data = datasetFields;
-	        	that.setMinRowsToShow(that.datasetGridOptions); // SOF2
 	        });
 	        this.tabs.setActive(1);
         }
@@ -248,39 +245,6 @@
             that.form.$setPristine();
         };
         
-        // SOF1:
-        // Following an answer in http://stackoverflow.com/questions/27837335/angular-ui-grid-dynamically-calculate-height-of-the-grid
-        // this function can be used in <div ui-grid="ctrl.gridDetails" ng-style="ctrl.getTableHeight(gridDetails)">
-        // ... except that it seems to affect only the outer box, not the contents.
-        // So this may be a waste of time...
-        //
-        this.getTableHeight = function(gridDetails){
-        	var rowHeight = 30;
-        	var headerHeight = 30;
-        	var maxHeight = 360;
-        	return {
-        		height: (Math.min(gridDetails.data.length * rowHeight + headerHeight, maxHeight)) + "px"
-        	};
-        }
-        
-        // SOF2: Another approach, from the same stackoverflow article.
-        // This requires extra rules in main.css, along the following lines:
-        //
-        // .job-details-tab-content .ui-grid, .job-details-tab-content .ui-grid-viewport {
-        //     height: auto !important;
-        // }
-        //
-        // This doesn't quite work either: tend to get an overtall box that nonetheless
-        // shows only a single row, and no scrollbar.
-
-        this.maxRowsToShow = 5;
-        
-        this.setMinRowsToShow = function(gridOptions){
-            //if data length is smaller, we shrink. otherwise we can do pagination.
-            gridOptions.minRowsToShow = Math.min(gridOptions.data.length, that.maxRowsToShow);
-            gridOptions.virtualizationThreshold = gridOptions.minRowsToShow ;
-        }
-        
         this.showDetails = function(entity) {
         	
         	// The body of this function was copied from the rowClick handler
@@ -375,28 +339,6 @@
 
                 that.metaTabs = tabs;
             });
-        };
-
-        this.showDetailsDataset = function(entity) {
-        	if (that.detailsEntity === entity.id) {
-        		// Clear the details display
-        		that.details = "";
-        		that.detailsEntity = 0;
-        	} else {
-        		that.details = "Details for dataset '" + entity.id + "' to appear here.";
-        		that.detailsEntity = entity.id;
-        	}
-        };
-
-        this.showDetailsDatafile = function(entity) {
-        	if (that.detailsEntity === entity.id) {
-        		// Clear the details display
-        		that.details = "";
-        		that.detailsEntity = 0;
-        	} else {
-        		that.details = "Details for datafile '" + entity.id + "' to appear here.";
-        		that.detailsEntity = entity.id;
-        	}
         };
 
         function getAllJobTypes(){
