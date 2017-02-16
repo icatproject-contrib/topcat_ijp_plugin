@@ -3,7 +3,10 @@
 </div>
 
 <div class="modal-body">
-    <div class="configure-job-box" take-up-remaining-height>
+  <div class="container-fluid">
+  <div class="row">
+  <div class="col-sm-6">
+    <div class="configure-job-box" style="height: calc(100% - 200px)">
 
         <div class="row">
             <div ng-if="configureJobController.compatibleJobTypes.length > 1" class="col-md-4 form-group">
@@ -54,6 +57,53 @@
         <div ng-if="configureJobController.compatibleJobTypes.length > 0 && !(configureJobController.selectedJobType.jobOptions.length > 0)" translate="CONFIGURE_JOB.MODAL.NO_JOB_OPTIONS_MESSAGE"></div>
 
     </div>
+  </div>
+  <div class="col-sm-6" ng-if="configureJobController.numInputEntities > 0">
+    <div class="configure-job-box" >
+    <h4 translate="CONFIGURE_JOB.MODAL.INPUTS.TITLE"></h4>
+    <ul class="nav nav-tabs nav-tabs-head" role="tablist">
+        <li ng-class="{ active: configureJobController.tabs.isActive(1) }"><a ng-click="configureJobController.tabs.setActive(1)" role="tab" ng-show="configureJobController.datasetGridOptions.data.length > 0" translate="CONFIGURE_JOB.MODAL.INPUTS.TABS.DATASETS"></a></li>
+        <li ng-class="{ active: configureJobController.tabs.isActive(2) }"><a ng-click="configureJobController.tabs.setActive(2)" role="tab" ng-show="configureJobController.datafileGridOptions.data.length > 0" translate="CONFIGURE_JOB.MODAL.INPUTS.TABS.DATAFILES"></a></li>
+    </ul>
+    <div id="jobInputsTab" class="tab-content job-details-tab-content" >
+
+        <div ng-if="configureJobController.tabs.isActive(1)" role="tabpanel" id="job-output" >
+                <div ui-grid="configureJobController.datasetGridOptions" ui-grid-infinite-scroll ui-grid-selection ui-grid-selection ui-grid-resize-columns class="configure-jobs-grid" ng-style="configureJobController.getTableHeight(configureJobController.datasetGridOptions)">
+                    <div class="no-rows row" ng-show="configureJobController.datasetGridOptions.data.length == 0">
+                        <div class="col-xs-12 empty-message" translate="CONFIGURE_JOB.MODAL.INPUTS.NO_DATASETS"></div>
+                    </div>
+                </div>
+        </div>
+
+        <div ng-if="configureJobController.tabs.isActive(2)" role="tabpanel" id="job-output" >
+            <div ui-grid="configureJobController.datafileGridOptions" ui-grid-infinite-scroll ui-grid-selection ui-grid-selection ui-grid-resize-columns  class="configure-jobs-grid" >
+                <div class="no-rows row" ng-show="configureJobController.datafileGridOptions.data.length == 0">
+                    <div class="col-xs-12 empty-message" translate="CONFIGURE_JOB.MODAL.INPUTS.NO_DATAFILES"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="box meta-box" >
+	<div ng-if="configureJobController.metaTabs.length > 0">
+		<uib-tabset>
+	    	<uib-tab ng-repeat="tab in configureJobController.metaTabs" ng-show="tab.items.length" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+	      		<div class="tab-content">
+					<div class="item" ng-repeat="item in tab.items">
+						<span class="label" ng-if="item.label !== null">{{item.label}}</span>
+						<span ng-if="!item.template" class="value">{{item.value}}</span>
+						<span ng-if="item.template" compile="item.template"></span>
+					</div>
+				</div>
+	    	</uib-tab>
+		</uib-tabset>
+	</div>
+	</div>
+    <p ng-if="configureJobController.errMsg">Error: {{configureJobController.errMsg}}</p>
+  </div>
+  </div>
+  </div>
+  </div>
 </div>
 
 <div class="modal-footer">
