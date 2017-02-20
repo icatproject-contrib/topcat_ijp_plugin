@@ -39,20 +39,6 @@
             }
         })();
         
-        // inputTabs holds the state of the input Datasets/Datafiles tabs
-        
-        this.inputTabs = (function() {
-            var active = 1;
-            return {
-                isActive: function(n) {
-                    return active === n;
-                },
-                setActive: function(n) {
-                    active = n;
-                }
-            }
-        })();
-        
         // metaTabs is used in the Details panel
         that.metaTabs = [];
         
@@ -106,14 +92,12 @@
 	        getInputDatasetFields().then(function(datasetFields){
 	        	that.datasetGridOptions.data = datasetFields;
 	        });
-	        this.inputTabs.setActive(1);
         }
 
         if (inputContainsDatafiles) {
 	        setUpGridOptions(datafileGridOptions,'Datafile');
 	        this.datafileGridOptions = datafileGridOptions;
 	        getInputDatafileFields();
-	        if (! inputContainsDatasets) { this.inputTabs.setActive(2); }
         }
         
         that.details = "";

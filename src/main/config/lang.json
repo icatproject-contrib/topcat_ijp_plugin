@@ -679,7 +679,9 @@
             "TITLE" : "Configure Job",
             "TABS" : {
                 "OPTIONS" : "Options",
-                "INPUTS"  : "Inputs"
+                "INPUTS"  : "Inputs",
+                "INPUT_DATASETS" : "Input Datasets",
+                "INPUT_DATAFILES" : "Input Datafiles"
             },
             "SINGLE_JOB_TYPE" : {
                 "TITLE" : "Job Type: {{jobName}}"
