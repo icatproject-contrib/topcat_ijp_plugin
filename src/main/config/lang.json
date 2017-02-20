@@ -677,6 +677,10 @@
     "CONFIGURE_JOB" : {
         "MODAL" : {
             "TITLE" : "Configure Job",
+            "TABS" : {
+                "OPTIONS" : "Options",
+                "INPUTS"  : "Inputs"
+            },
             "SINGLE_JOB_TYPE" : {
                 "TITLE" : "Job Type: {{jobName}}"
             },

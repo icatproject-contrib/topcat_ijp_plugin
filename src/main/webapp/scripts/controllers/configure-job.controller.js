@@ -25,7 +25,23 @@
         var isScroll = pagingConfig.pagingType == 'scroll';
         var pageSize = isScroll ? pagingConfig.scrollPageSize : pagingConfig.paginationNumberOfRows;
         
-        this.tabs = (function() {
+        // topTabs holds the state of the top-level Options / Inputs tabs
+        
+        this.topTabs = (function() {
+            var active = 1;
+            return {
+                isActive: function(n) {
+                    return active === n;
+                },
+                setActive: function(n) {
+                    active = n;
+                }
+            }
+        })();
+        
+        // inputTabs holds the state of the input Datasets/Datafiles tabs
+        
+        this.inputTabs = (function() {
             var active = 1;
             return {
                 isActive: function(n) {
@@ -90,14 +106,14 @@
 	        getInputDatasetFields().then(function(datasetFields){
 	        	that.datasetGridOptions.data = datasetFields;
 	        });
-	        this.tabs.setActive(1);
+	        this.inputTabs.setActive(1);
         }
 
         if (inputContainsDatafiles) {
 	        setUpGridOptions(datafileGridOptions,'Datafile');
 	        this.datafileGridOptions = datafileGridOptions;
 	        getInputDatafileFields();
-	        if (! inputContainsDatasets) { this.tabs.setActive(2); }
+	        if (! inputContainsDatasets) { this.inputTabs.setActive(2); }
         }
         
         that.details = "";
