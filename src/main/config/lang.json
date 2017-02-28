@@ -715,6 +715,7 @@
                     "FILE_SIZE" : "Size"
                 }
             },
+            "GO_TO_OPTIONS_LABEL" : "Go to Options to submit",
             "BUTTON" : {
                 "SUBMIT_JOB" : {
                     "MULTIPLE_BATCH" : {
