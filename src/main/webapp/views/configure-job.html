@@ -106,6 +106,10 @@
 
 <div class="modal-footer">
     <div ng-if="configureJobController.compatibleJobTypes.length > 0">
+        <span ng-if="configureJobController.inputsFromCart && configureJobController.topTabs.isActive(1)">
+            <label class="control-label" for="emptyCart" uib-tooltip="{{'CONFIGURE_JOB.MODAL.EMPTY_CART.TOOLTIP' | translate}}" tooltip-placement="top-left" translate="CONFIGURE_JOB.MODAL.EMPTY_CART.TEXT"></label>
+            <input class="empty-cart-checkbox" type="checkbox" name="emptyCart" ng-model="configureJobController.doEmptyCart">
+        </span>
         <span ng-if="!configureJobController.topTabs.isActive(1)">
             <label class="control-label" translate="CONFIGURE_JOB.MODAL.GO_TO_OPTIONS_LABEL"></label>
         </span>
