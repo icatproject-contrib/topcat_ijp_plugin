@@ -6,7 +6,7 @@
 
     var app = angular.module('topcat');
 
-    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalInstance, $filter, $translate, tc, inputEntities, facilityName, pluginUrl, helpers, uiGridConstants){
+    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalStack, $uibModalInstance, $filter, $translate, tc, inputEntities, inputsFromCart, facilityName, pluginUrl, helpers, uiGridConstants){
 
         var that = this;
         var inputEntityTypes = _.uniq(_.map(inputEntities, 'entityType'));
@@ -18,6 +18,9 @@
         var previousEntityHash;
         that.numInputEntities = inputEntities.length;
         that.loadingJobTypes = true;
+        that.inputsFromCart = inputsFromCart;
+        that.doEmptyCart = true;
+        that.cartHasBeenEmptied = false;
         that.form = {};
         getCompatibleJobTypes();
 
@@ -178,7 +181,20 @@
             }
 
             //Wait for all submits to resolve/reject before displaying results to user
-            $q.all(promises).finally(function(){
+            $q.all(promises).then(function(){
+                if (that.inputsFromCart && that.doEmptyCart) {
+                	if (that.failedSubmissions.length == 0) {
+	                	that.cartHasBeenEmptied = true;
+	                	return tc.facility(facilityName).user().deleteAllCartItems({});
+                	} else {
+                		that.errMsg = "One or more job submissions failed; cart has not been emptied";
+                	}
+                }
+            }, function(){ // on failure
+            	if (that.inputsFromCart && that.doEmptyCart) {
+            		that.errMsg = "One or more submissions failed; cart has not been emptied";
+            	}
+            }).finally(function(){
                 that.isSubmitting = false;
                 $rootScope.$broadcast('jobSubmitted');
             });
@@ -239,6 +255,10 @@
                 modal.close();
             }
         };
+        
+        this.dismissAll = function(){
+        	$uibModalStack.dismissAll();
+        }
 
         this.jobTypeSelected = function(){
             setupJobDefaults();

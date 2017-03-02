@@ -90,6 +90,7 @@ registerTopcatPlugin(function(pluginUrl){
                                 return cart.cartItems;
                             });
                         },
+                        inputsFromCart: function () { return true; },
                         facilityName: function() { return tc.ijpFacilities()[0].config().name; },
                         pluginUrl: function() { return pluginUrl; }
                     }
@@ -114,6 +115,7 @@ registerTopcatPlugin(function(pluginUrl){
                                     return cart.cartItems;
                                 });
                             },
+                            inputsFromCart: function () { return true; },
                             facilityName: function() { return ijpFacility.config().name; },
                             pluginUrl: function() { return pluginUrl; }
                         }
@@ -136,6 +138,7 @@ registerTopcatPlugin(function(pluginUrl){
                             entityType: entity.entityType.toLowerCase(),
                             entityId: entity.id
                         }]; },
+                        inputsFromCart: function () { return false; },
                         facilityName:  function() { return entity.facility.config().name; },
                         pluginUrl: function() { return pluginUrl; }
                     }

@@ -108,12 +108,12 @@
                         scope: $scope
                     });
                 } else {
-                    that.openConfigureJobModal([]);
+                    that.openConfigureJobModal([],false);
                 }
             })
         };
 
-        this.openConfigureJobModal = function(jobInputs) {
+        this.openConfigureJobModal = function(jobInputs,inputsFromCart) {
             if(this.chooseJobInputsModal) { this.chooseJobInputsModal.close() }
             $uibModal.open({
                 templateUrl : $stateParams.pluginUrl + 'views/configure-job.html',
@@ -121,6 +121,7 @@
                 size : 'lg',
                 resolve: {
                     inputEntities: function() { return jobInputs; },
+                    inputsFromCart : function() { return inputsFromCart; },
                     facilityName: function() { return that.selectedIjpFacility.config().name; },
                     pluginUrl: function() { return $stateParams.pluginUrl; }
                 }
