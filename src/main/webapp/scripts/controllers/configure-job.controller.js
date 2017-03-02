@@ -6,7 +6,7 @@
 
     var app = angular.module('topcat');
 
-    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalInstance, $filter, tc, inputEntities, facilityName, pluginUrl){
+    app.controller('ConfigureJobController', function($q, $scope, $rootScope, $uibModal, $uibModalInstance, $filter, $translate, tc, inputEntities, facilityName, pluginUrl, helpers, uiGridConstants){
 
         var that = this;
         var inputEntityTypes = _.uniq(_.map(inputEntities, 'entityType'));
@@ -15,11 +15,94 @@
         var multipleInputEntities = inputEntities.length > 1;
         var inputDatasetTypes = [];
         var booleanGroupNames = [];
+        var previousEntityHash;
         that.numInputEntities = inputEntities.length;
         that.loadingJobTypes = true;
         that.form = {};
         getCompatibleJobTypes();
 
+        var pagingConfig = tc.config().paging;
+        var isScroll = pagingConfig.pagingType == 'scroll';
+        var pageSize = isScroll ? pagingConfig.scrollPageSize : pagingConfig.paginationNumberOfRows;
+        
+        // topTabs holds the state of the top-level Options / Inputs tabs
+        
+        this.topTabs = (function() {
+            var active = 1;
+            return {
+                isActive: function(n) {
+                    return active === n;
+                },
+                setActive: function(n) {
+                    active = n;
+                }
+            }
+        })();
+        
+        // metaTabs is used in the Details panel
+        that.metaTabs = [];
+        
+        var datasetGridOptions = _.merge({
+            	data: [],
+            	appScopeProvider: this
+            }, {
+            "enableFiltering": false,
+            "columnDefs": [
+                {
+                    "field": "id",
+                    sortingAlgorithm: function(a, b) { return Math.sign(a - b);}
+                },
+                {
+                    "field": "name"
+                },
+                {
+                    "field": "datasetType"
+                }            ]
+            });
+
+        var datafileGridOptions = _.merge({
+	        	data: [],
+	        	appScopeProvider: this
+	        }, {
+	        "enableFiltering": false,
+	        "columnDefs": [
+	            {
+	                "field": "id",
+	                sortingAlgorithm: function(a, b) { return Math.sign(a - b);}
+	            },
+	            {
+	                "field": "name"
+	            },
+	            {
+	                "field": "location"
+	            },
+	            {
+	                "field": "fileSize"
+	            }            ]
+	        });
+
+        // I have used slightly different mechanisms for getInputData{set,file}s;
+        // both seem to work, or at least neither seems worse than the other.
+        // In future, I may find an approach that works with one way but not the other,
+        // so am leaving both in place at the moment.
+        
+        if (inputContainsDatasets) {
+	        setUpGridOptions(datasetGridOptions,'Dataset');
+	        this.datasetGridOptions = datasetGridOptions;
+	        getInputDatasetFields().then(function(datasetFields){
+	        	that.datasetGridOptions.data = datasetFields;
+	        });
+        }
+
+        if (inputContainsDatafiles) {
+	        setUpGridOptions(datafileGridOptions,'Datafile');
+	        this.datafileGridOptions = datafileGridOptions;
+	        getInputDatafileFields();
+        }
+        
+        that.details = "";
+        that.detailsEntity = 0;
+        
         var submitJob = function(submitMultipleJobs) {
             var promises = [];
             var jobParameters = [];
@@ -133,7 +216,7 @@
 
         this.checkFormValidity = function() {
             that.form.$setSubmitted();
-            if (that.form.$valid){ return true }
+            if (that.form.$valid){ return true; }
             return false;
         }
 
@@ -160,6 +243,102 @@
         this.jobTypeSelected = function(){
             setupJobDefaults();
             that.form.$setPristine();
+        };
+        
+        this.showDetails = function(entity) {
+        	
+        	// The body of this function was copied from the rowClick handler
+        	// in topcat's meta-panel.controller.js
+        	
+            var facility = tc.facility(entity.facilityName);
+            var config;
+            if(entity.type == 'facility'){
+                config = tc.config().browse.metaTabs;
+            } else if(facility.config() && facility.config().browse[entity.type]) {
+                config = facility.config().browse[entity.type].metaTabs;
+            } else {
+            	// debugging
+            	if( ! facility.config() ) {
+            		that.errMsg = "No config found for '" + entity.facilityName + "'";
+            	}
+            	// ultimate fallback?
+            	config = tc.config().browse.metaTabs;
+            }
+
+            if(!config) return;
+
+            helpers.setupMetatabs(config, entity.type);
+
+            var entityHash = entity.facilityName + ":" + entity.type + ":" + entity.id;
+            if(entityHash == previousEntityHash){
+                that.metaTabs = [];
+                previousEntityHash = undefined;
+                return;
+            }
+            previousEntityHash = entityHash;
+            
+            var queryBuilder = facility.icat().queryBuilder(entity.type).where(entity.type + ".id = " + entity.id);
+
+            if(entity.type == 'instrument'){
+                queryBuilder.include('instrumentScientistUser');
+            }
+
+            if(entity.type == 'investigation'){
+                queryBuilder.include('user');
+                queryBuilder.include('investigationParameterType');
+                queryBuilder.include('sample');
+                queryBuilder.include('publication');
+                queryBuilder.include('investigationUser');
+            }
+
+            if(entity.type == 'dataset'){
+                queryBuilder.include('datasetParameterType');
+                queryBuilder.include('sample');
+                queryBuilder.include('datasetType');
+            }
+
+            if(entity.type == 'datafile'){
+                queryBuilder.include('datafileParameterType');
+            }
+
+
+
+            queryBuilder.run().then(function(entity){
+                entity = entity[0];
+
+                var tabs = [];
+                _.each(config, function(tabConfig){
+                    var tab = {
+                        title: $translate.instant(tabConfig.title),
+                        items: []
+                    };
+                    _.each(tabConfig.items, function(itemConfig){
+                        var find = entity.entityType;
+                        var field = itemConfig.field;
+                        var matches;
+                        if(matches = itemConfig.field.replace(/\|.+$/, '').match(/^(.*)?\.([^\.\[\]]+)$/)){
+                            find = matches[1];
+                            field = matches[2]
+                        }
+                        if(!find.match(/\]$/)) find = find + '[]';
+                        _.each(entity.find(find), function(entity){
+                            var value = entity.find(field)[0];
+                            if(value !== undefined){
+                                tab.items.push({
+                                    label: itemConfig.label ? $translate.instant(itemConfig.label) : null, 
+                                    template: itemConfig.template,
+                                    value: value,
+                                    entity: entity
+                                });
+                            }
+                        });
+                    });
+
+                    tabs.push(tab);
+                });
+
+                that.metaTabs = tabs;
+            });
         };
 
         function getAllJobTypes(){
@@ -253,6 +432,48 @@
             return deferred.promise;
         }
 
+        function getInputDatasetFields(){
+            var inputDatasets = _.filter(inputEntities, function(inputEntity){ return inputEntity.entityType === 'dataset'; });
+            var inputDatasetIds = _.map(inputDatasets, 'entityId');
+
+            return tc.icat(facilityName).query("select dataset.id, dataset.name, dataset.type.name from Dataset dataset where dataset.id in ('" + inputDatasetIds.join("','") + "')").then(function(results) {
+                var inputDatasetFields = [];
+                _.each(results, function(result){
+                	inputDatasetFields.push({
+                		id : result[0],
+                		name : result[1],
+                		datasetType : result[2],
+                		type : "dataset",
+                		facilityName : facilityName
+                	});
+                });
+                // that.datasetGridOptions.data = inputDatasetFields;
+                return inputDatasetFields;
+            });
+        }
+
+        function getInputDatafileFields(){
+            var inputDatafiles = _.filter(inputEntities, function(inputEntity){ return inputEntity.entityType === 'datafile'; });
+            var inputDatafileIds = _.map(inputDatafiles, 'entityId');
+
+            tc.icat(facilityName).query("select datafile.id, datafile.name, datafile.location, datafile.fileSize from Datafile datafile where datafile.id in ('" + inputDatafileIds.join("','") + "')").then(function(results) {
+                that.inputDatafileFields = [];
+                _.each(results, function(result){
+                	that.inputDatafileFields.push({
+                		id : result[0],
+                		name : result[1],
+                		location : result[2],
+                		fileSize : result[3],
+                		type : "datafile",
+                		facilityName : facilityName
+                	});
+                });
+                that.datafileGridOptions.data = that.inputDatafileFields;
+            }, function(error){
+                that.errMsg = "Failed to get datafile fields";
+            });
+        }
+
         function setupBooleanGroupOptions() {
             _.each(that.compatibleJobTypes, function(jobType){
                 //Change structure of any 'boolean group' job options so they are more easily constructible in html
@@ -306,6 +527,62 @@
                     }
                 });
             });
+        }
+
+        function setUpGridOptions(gridOptions,entityType){
+
+            gridOptions.enableHorizontalScrollbar = uiGridConstants.scrollbars.NEVER;
+            gridOptions.enableRowSelection =  false;
+            gridOptions.enableRowHeaderSelection =  false;
+            gridOptions.gridMenuShowHideColumns =  false;
+            gridOptions.pageSize =  !that.isScroll ? pagingConfig.paginationNumberOfRows : null;
+            gridOptions.paginationPageSizes =  pagingConfig.paginationPageSizes;
+            gridOptions.paginationNumberOfRows =  pagingConfig.paginationNumberOfRows;
+            // Filtering is probably overkill, but we shall see...
+            gridOptions.enableFiltering = false;
+            // ng-click action no longer uses entityType to show dataset details
+            gridOptions.rowTemplate = '<div ng-click="grid.appScope.showDetails(row.entity)" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }" ui-grid-cell></div>';
+
+            _.each(gridOptions.columnDefs, function(columnDef){
+                columnDef.enableHiding = false;
+
+                // We don't have Date-valued columns at present, but might in future, so this might be handy...
+                if(columnDef.field == 'date'){
+                    columnDef.filters = [
+                        {
+                            "condition": function(filterDate, cellDate) {
+                                if (filterDate == "") return true;
+                                //Need to format dates so they are similar. Remove time from cellDate and remove double escapes from filterDate.
+                                return new Date(cellDate.replace(/\s.*$/,'')) >= new Date(filterDate.replace(/\\/g,''));
+                            },
+                            "placeholder": "From..."
+                        },
+                        {
+                            "condition": function(filterDate, cellDate) {
+                                if (filterDate == "") return true;
+                                //Need to format dates so they are similar. Remove time from cellDate and remove double escapes from filterDate.
+                                return new Date(cellDate.replace(/\s.*$/,'')) <= new Date(filterDate.replace(/\\/g,''));
+                            },
+                            "placeholder": "To..."
+                        }
+                    ];
+                    columnDef.filterHeaderTemplate = '<div class="ui-grid-filter-container" datetime-picker only-date ng-model="col.filters[0].term" placeholder="From..."></div><div class="ui-grid-filter-container" datetime-picker only-date ng-model="col.filters[1].term" placeholder="To..."></div>';
+                    columnDef.sort = {
+                        direction: uiGridConstants.DESC
+                    };
+                } else {
+                    columnDef.filter = {
+                        "condition": uiGridConstants.filter.CONTAINS,
+                        "placeholder": "Containing...",
+                        "type": "input"
+                    };
+                }
+
+                columnDef.displayName = "CONFIGURE_JOB.MODAL.INPUTS.COLUMN." + helpers.constantify(columnDef.field);
+                columnDef.headerCellFilter = 'translate';
+
+            });
+
         }
 
     });

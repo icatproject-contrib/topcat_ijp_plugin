@@ -10,12 +10,14 @@
         "LANGUAGE": "Language",
         "LOGIN": "Login",
         "LOGOUT": "Logout",
-        "LOGOUT_FACILITY" : "Logout ({{userName}})",
+        "LOGOUT_FACILITY" : "Logout ({{fullName != '' ? fullName : username}})",
         "LOGOUT_ALL": "Logout All",
         "MAIN_TAB" : {
             "MY_DATA" : "My Data",
             "BROWSE" : "Browse",
             "SEARCH" : "Search",
+            "MY_MACHINES" : "My Machines",
+            "MY_DOIS" : "My DOIs",
             "CART" : "Cart",
             "DOWNLOAD" : "Download",
             "MY_JOBS" : "My Jobs"
@@ -154,8 +156,10 @@
                 "DOI": "Doi",
                 "FILE_SIZE": "File Size",
                 "CHECKSUM": "Checksum",
-                "CREATE_TIME": "Create Time",
-                "MOD_TIME": "Modified Time"
+                "DATAFILE_CREATE_TIME": "Create Time",
+                "DATAFILE_MOD_TIME": "Modified Time",
+                "MOD_TIME": "Modified Time",
+                "CREATE_TIME": "Create Time"
             },
             "ACTIONS":{
                 "NAME": "Actions",
@@ -253,6 +257,20 @@
     "CART" : {
         "TITLE" : "Cart",
         "NEW_MESSAGE": "A new item has been added to the cart",
+        "STATUS": {
+            "ONLINE": "Available",
+            "RESTORING": "Restoring from Tape",
+            "ARCHIVED": "Archived on Tape"
+        },
+        "COLUMN" : {
+            "ID" : "Id",
+            "NAME" : "Name",
+            "ENTITY_TYPE" : "Type",
+            "FACILITY" : "Facility",
+            "SIZE" : "Size",
+            "FACILITY_NAME" : "Facility",
+            "ACTIONS" : "Action"
+        },
         "EMPTY" : "Cart is empty",
         "REMOVE_ALL_BUTTON" : {
             "TEXT" : "Remove All",
@@ -363,6 +381,7 @@
         "TITLE" : "Downloads",
         "NEW_MESSAGE": "A new download has been added",
         "COLUMN" : {
+            "FULL_NAME": "Name",
             "USER_NAME": "Username",
             "PREPARED_ID": "Prepared Id",
             "SIZE": "Size",
@@ -565,7 +584,7 @@
             "TABTITLE" : "Datafile Details",
             "NAME" : "Name",
             "DESCRIPTION" : "Description",
-            "SIZE" : "File Size",
+            "FILE_SIZE" : "File Size",
             "LOCATION" : "Location",
             "PARAMETERS" : "Parameters"
         }
@@ -658,6 +677,12 @@
     "CONFIGURE_JOB" : {
         "MODAL" : {
             "TITLE" : "Configure Job",
+            "TABS" : {
+                "OPTIONS" : "Options",
+                "INPUTS"  : "Inputs",
+                "INPUT_DATASETS" : "Input Datasets",
+                "INPUT_DATAFILES" : "Input Datafiles"
+            },
             "SINGLE_JOB_TYPE" : {
                 "TITLE" : "Job Type: {{jobName}}"
             },
@@ -674,6 +699,23 @@
             "SELECT_LABEL" : {
                 "JOB_TYPE" : "Job Type"
             },
+            "INPUTS" : {
+                "TITLE" : "Inputs",
+                "TABS" : {
+                    "DATASETS" : "Datasets",
+                    "DATAFILES" : "Datafiles"
+                },
+                "NO_DATASETS" : "No Dataset inputs",
+                "NO_DATAFILES" : "No Datafile inputs",
+                "COLUMN" : {
+                    "ID" : "ID",
+                    "NAME" : "Name",
+                    "DATASET_TYPE" : "Dataset Type",
+                    "LOCATION" : "Location",
+                    "FILE_SIZE" : "Size"
+                }
+            },
+            "GO_TO_OPTIONS_LABEL" : "Go to Options to submit",
             "BUTTON" : {
                 "SUBMIT_JOB" : {
                     "MULTIPLE_BATCH" : {

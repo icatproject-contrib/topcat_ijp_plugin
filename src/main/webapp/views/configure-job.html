@@ -3,6 +3,13 @@
 </div>
 
 <div class="modal-body">
+  <ul class="nav nav-tabs nav-tabs-head" role="tablist">
+        <li ng-class="{ active: configureJobController.topTabs.isActive(1) }"><a ng-click="configureJobController.topTabs.setActive(1)" role="tab" translate="CONFIGURE_JOB.MODAL.TABS.OPTIONS"></a></li>
+        <li ng-class="{ active: configureJobController.topTabs.isActive(2) }"><a ng-click="configureJobController.topTabs.setActive(2)" role="tab" ng-show="configureJobController.datasetGridOptions.data.length > 0" translate="CONFIGURE_JOB.MODAL.TABS.INPUT_DATASETS"></a></li>
+        <li ng-class="{ active: configureJobController.topTabs.isActive(3) }"><a ng-click="configureJobController.topTabs.setActive(3)" role="tab" ng-show="configureJobController.datafileGridOptions.data.length > 0" translate="CONFIGURE_JOB.MODAL.TABS.INPUT_DATAFILES"></a></li>
+  </ul>
+  <div id="jobOptionsTab" class="tab-content job-options-tab-content" >
+    <div ng-if="configureJobController.topTabs.isActive(1)" role="tabpanel" id="job-options" >
     <div class="configure-job-box" take-up-remaining-height>
 
         <div class="row">
@@ -54,12 +61,57 @@
         <div ng-if="configureJobController.compatibleJobTypes.length > 0 && !(configureJobController.selectedJobType.jobOptions.length > 0)" translate="CONFIGURE_JOB.MODAL.NO_JOB_OPTIONS_MESSAGE"></div>
 
     </div>
+    </div>
+    <div ng-if="configureJobController.topTabs.isActive(2)" role="tabpanel" id="job-input-datasets" >
+      <div class="job-inputs-box" >
+    
+                <div ui-grid="configureJobController.datasetGridOptions" ui-grid-infinite-scroll ui-grid-selection ui-grid-selection ui-grid-resize-columns class="configure-jobs-grid" take-up-remaining-height>
+                    <div class="no-rows row" ng-show="configureJobController.datasetGridOptions.data.length == 0">
+                        <div class="col-xs-12 empty-message" translate="CONFIGURE_JOB.MODAL.INPUTS.NO_DATASETS"></div>
+                    </div>
+                </div>
+                
+      </div>
+    </div>
+    <div ng-if="configureJobController.topTabs.isActive(3)" role="tabpanel" id="job-input-datafiles" >
+      <div class="job-inputs-box" >
+
+            <div ui-grid="configureJobController.datafileGridOptions" ui-grid-infinite-scroll ui-grid-selection ui-grid-selection ui-grid-resize-columns  class="configure-jobs-grid" take-up-remaining-height>
+                <div class="no-rows row" ng-show="configureJobController.datafileGridOptions.data.length == 0">
+                    <div class="col-xs-12 empty-message" translate="CONFIGURE_JOB.MODAL.INPUTS.NO_DATAFILES"></div>
+                </div>
+            </div>
+        
+      </div>
+    </div>
+  </div>
+    <div class="box meta-box" >
+	<div ng-if="configureJobController.metaTabs.length > 0">
+		<uib-tabset>
+	    	<uib-tab ng-repeat="tab in configureJobController.metaTabs" ng-show="tab.items.length" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+	      		<div class="tab-content">
+					<div class="item" ng-repeat="item in tab.items">
+						<span class="label" ng-if="item.label !== null">{{item.label}}</span>
+						<span ng-if="!item.template" class="value">{{item.value}}</span>
+						<span ng-if="item.template" compile="item.template"></span>
+					</div>
+				</div>
+	    	</uib-tab>
+		</uib-tabset>
+	</div>
+	</div>
+    <p ng-if="configureJobController.errMsg">Error: {{configureJobController.errMsg}}</p>
+  </div>
 </div>
 
 <div class="modal-footer">
     <div ng-if="configureJobController.compatibleJobTypes.length > 0">
+        <span ng-if="!configureJobController.topTabs.isActive(1)">
+            <label class="control-label" translate="CONFIGURE_JOB.MODAL.GO_TO_OPTIONS_LABEL"></label>
+        </span>
         <span ng-if="configureJobController.isInteractive()">
             <button class="btn btn-primary"
+            		ng-if="configureJobController.topTabs.isActive(1)"
                     ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.INTERACTIVE.TEXT"></button>
             <button class="btn btn-warning"
@@ -68,6 +120,7 @@
         </span>
         <span ng-if="configureJobController.isBatchSingular()">
             <button class="btn btn-primary"
+            		ng-if="configureJobController.topTabs.isActive(1)"
                     ng-click="configureJobController.checkFormValidity() ? configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
             <button class="btn btn-warning"
@@ -76,6 +129,7 @@
         </span>
         <span ng-if="configureJobController.isBatchMultiple() && !configureJobController.isSingleJobForced()">
             <button class="btn btn-primary"
+            		ng-if="configureJobController.topTabs.isActive(1)"
                     ng-click="configureJobController.checkFormValidity() ? configureJobController.openConfirmJobModal() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
             <button class="btn btn-warning"
@@ -84,6 +138,7 @@
         </span>
         <span ng-if="configureJobController.isBatchMultiple() && configureJobController.isSingleJobForced()">
             <button class="btn btn-primary"
+            		ng-if="configureJobController.topTabs.isActive(1)"
                     ng-click="configureJobController.checkFormValidity() ?  configureJobController.submitSingleJob() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.BATCH.TEXT"></button>
             <button class="btn btn-warning"
@@ -92,6 +147,7 @@
         </span>
         <span ng-if="configureJobController.isMultipleBatch()">
             <button class="btn btn-primary"
+            		ng-if="configureJobController.topTabs.isActive(1)"
                     ng-click="configureJobController.checkFormValidity() ? configureJobController.submitMultipleJobs() : null"
                     translate="CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TEXT"
                     uib-tooltip="{{'CONFIGURE_JOB.MODAL.BUTTON.SUBMIT_JOB.MULTIPLE_BATCH.TOOLTIP.TEXT' | translate : { numJobs: configureJobController.numInputEntities } }}"
