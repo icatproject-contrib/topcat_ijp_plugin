@@ -151,9 +151,11 @@
                         //Multiple jobs can only be submitted at once if the job is a batch job, so the response must have an id
                         that.jobIds.push(response.jobId);
                     }, function(response){
+                    	var message = "Submit failed but no error response was received";
+                    	if (response && response.message) message = response.message;
                         that.failedSubmissions.push({
-                            inputEntityIds: inputEntity.entityId,
-                            error: response || "No error response"
+                            inputEntityIds: _.map(inputEntities, 'entityId').join(', '),
+                            error: message
                         });
                     }));
                 });
@@ -173,9 +175,11 @@
                     }
 
                 }, function(response){
+                	var message = "Submit failed but no error response was received";
+                	if (response && response.message) message = response.message;
                     that.failedSubmissions.push({
                         inputEntityIds: _.map(inputEntities, 'entityId').join(', '),
-                        error: response || "No error response"
+                        error: message
                     });
                 }));
             }

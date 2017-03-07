@@ -127,7 +127,7 @@
               sessionId: facility.icat().session().sessionId
             }).then(function(response){
               out.resolve(response);
-            }, function(){ out.reject(); });
+            }, function(response){ out.reject(response); });
             return out.promise
           },
           'string, array': function(jobType, jobParameters){
@@ -139,7 +139,7 @@
             }, true);
             this.post('submit', params, {}).then(function(response){
               out.resolve(response);
-            }, function(){ out.reject(); });
+            }, function(response){ out.reject(response); });
             return out.promise
           }
         });
