@@ -113,7 +113,7 @@
               sessionId: facility.icat().session().sessionId
             }).then(function(){
               out.resolve();
-            }, function(){ out.reject(); });
+            }, function(response){ out.reject(response); });
 
             return out.promise
           }

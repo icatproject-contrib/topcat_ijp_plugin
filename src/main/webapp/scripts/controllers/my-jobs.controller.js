@@ -139,7 +139,12 @@
         }
 
         this.cancelJob = function(job){
-            tc.ijp(facilityName).cancelJob(String(job.jobId)).finally(function(){
+            tc.ijp(facilityName).cancelJob(String(job.jobId)).catch(function(response){
+            	var message = "Cancel failed but no error message was received";
+            	if (response && response.message) message = "Cancel failed with: " + response.message;
+            	message = message + "Job may have completed; if so status should update in a minute or two";
+            	alert(message);
+            }).finally(function(){
                 refresh();
             });
         }
