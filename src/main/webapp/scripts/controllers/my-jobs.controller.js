@@ -16,6 +16,8 @@
         this.userFacilities = tc.userFacilities();
         this.ijpFacilities = tc.ijpFacilities();
         this.selectedIjpFacility = this.ijpFacilities[0];
+        
+        this.activeJobsMsg = "";
 
         if(!$state.params.facilityName){
             if (this.ijpFacilities.length > 0) {
@@ -251,9 +253,21 @@
             });
         };
 
+        function setActiveJobsMsg(jobs) {
+        	var nActive = jobs.reduce(function(acc,job) {
+        	    return (job.status == 'Queued' || job.status == 'Executing') ? acc+1 : acc;
+        	}, 0);
+        	if (nActive > 0) {
+        		that.activeJobsMsg = " (" + nActive + " executing/queued)";
+        	} else {
+        		that.activeJobsMsg = "";
+        	}
+        };
+        
         function refresh() {
             getJobs().then(function(results){
                 gridOptions.data = results;
+                setActiveJobsMsg(results);
             });
         }
 
